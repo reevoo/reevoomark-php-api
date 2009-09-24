@@ -39,7 +39,7 @@
         $parsed_headers = Array();
         foreach($headers as $header){
           list($key, $value) = split(":", $header, 2);
-          $parsed_headers[$key] = $value;
+          $parsed_headers[$key] = trim($value);
         }
         $this->headers = $parsed_headers;
         return $this->headers;

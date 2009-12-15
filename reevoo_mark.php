@@ -127,7 +127,7 @@
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
       curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000);
-      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/2");
+      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/3");
       curl_setopt($ch, CURLOPT_REFERER, "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
       curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 2000);
       curl_setopt($ch, CURLOPT_HEADER, 1);

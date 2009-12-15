@@ -56,5 +56,10 @@ class ReevooMarkDocumentWithBlankLinesTest extends UnitTestCase {
   }
 }
 
+class ReevooMarkDocumentWithNoContent extends UnitTestCase {
+  function test_should_have_a_500_status(){
+    $this->assertEqual(500, new ReevooMarkDocument(false).statusCode);
+  }
+}
 
 ?>

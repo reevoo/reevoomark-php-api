@@ -11,7 +11,10 @@
     }
 
     function body(){
-      return $this->body;
+      if($this->isValidResponse())
+        return $this->body;
+      else
+        return "";
     }
 
     function statusCode(){
@@ -19,6 +22,8 @@
       $status_line = $headers[0];
       if(preg_match("/^HTTP\/1.1 ([0-9]{3})/", $status_line, $matches))
         return $matches[1];
+      else
+        return 500;
     }
 
     function header($name){
@@ -49,12 +54,11 @@
     function isValidResponse(){
       if(!$this->data)
         return false;
-      $status_code = $this->statusCode();
-      // 2xx, 4xx are both cached and rendered, we ignore 3xx and 5xx responses
-      if($status_code >= 500 or $status_code >= 300 and $status_code < 400)
-        return false;
-      else
-        return true;
+      return 200 == $this->statusCode();
+    }
+
+    function isCachableResponse(){
+      return $this->statusCode() < 500;
     }
 
     function hasExpired(){
@@ -144,7 +148,7 @@
       if($doc->hasExpired())
       {
         $remote_doc = new ReevooMarkDocument($this->loadFromRemote());
-        if($remote_doc->isValidResponse())
+        if(!$doc->isCachableResponse() || $remote_doc->isCachableResponse())
         {
           $this->saveToCache($remote_doc->data);
           $doc = $remote_doc;

@@ -48,6 +48,21 @@ class ReevooMarkTest extends UnitTestCase {
     $this->assertEqual("Some more content.\n", $rvm->body());
   }
 
+  function test_with_an_empty_cache_and_a_broken_server_we_should_save_to_cache(){
+    $rvm = new MockedReevooMark();
+    $rvm->expectOnce("loadFromCache");
+    $rvm->setReturnValue("loadFromCache", false);
+
+    $rvm->expectOnce("loadFromRemote");
+    $rvm->setReturnValue("loadFromRemote", false);
+
+    $rvm->expectOnce("saveToCache", array(false));
+
+    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
+
+    $this->assertEqual("", $rvm->body());
+  }
+
   function test_with_an_expired_cache_and_a_broken_server_we_should_load_from_cache(){
     $rvm = new MockedReevooMark();
     $rvm->expectOnce("loadFromCache");
@@ -90,7 +105,7 @@ class ReevooMarkTest extends UnitTestCase {
 
     $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
 
-    $this->assertEqual("No review found.", $rvm->body());
+    $this->assertEqual("", $rvm->body());
   }
 
   function test_should_report_number_of_reviews(){

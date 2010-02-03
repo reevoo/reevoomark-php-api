@@ -118,6 +118,16 @@ class ReevooMarkTest extends UnitTestCase {
     $this->assertEqual(10, $rvm->reviewCount());
   }
 
+  function test_should_report_the_best_price(){
+    $rvm = new MockedReevooMark();
+    $rvm->expectOnce("loadFromCache");
+    $rvm->setReturnValue("loadFromCache", "HTTP/1.1 200 OK\nX-Reevoo-BestPrice:£423\n\nHello  10 reviews");
+
+    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
+
+    $this->assertEqual('£423', $rvm->bestPrice());
+  }
+
   function test_should_generate_cachepath_from_sku(){
     $rvm = new MockedReevooMarkWithPublicCachePath();
     $rvm->ReevooMark("foo", "http://example.com/mark_url", "AAA", "1234567890");

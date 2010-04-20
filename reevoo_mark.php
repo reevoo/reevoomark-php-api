@@ -3,11 +3,12 @@
     public $data;
     protected $head, $body, $headers;
 
-    function __construct($data){
+    function __construct($data, $mtime){
       if($this->data = $data)
         list($this->head, $this->body) = split("\n\n", $this->data, 2);
       else
         $this->head = $this->body = null;
+      $this->mtime = $mtime;
     }
 
     function body(){
@@ -73,12 +74,7 @@
     }
 
     function currentAge(){
-      return time() - $this->date() + $this->header("Age");
-    }
-
-    function date(){
-      if(preg_match("/([0-9]{2})\s+([a-zA-Z]+)\s+([0-9]{4})\s+([0-9]{2}:[0-9]{2}:[0-9]{2}\s+[A-Z]{3})$/", $this->header("Date"), $matches))
-        return strtotime("$matches[1]-$matches[2]-$matches[3] $matches[4]");
+      return time() - $this->mtime + $this->header("Age");
     }
   };
 
@@ -110,13 +106,6 @@
       return $this->data->body();
     }
 
-    protected function loadFromCache(){
-      if($this->cache_path){
-        if(file_exists($this->cachePath()))
-          return file_get_contents($this->cachePath());
-      }
-    }
-
     protected function saveToCache($data){
       if($this->cache_path){
         if(!file_exists($this->cache_path))
@@ -125,13 +114,33 @@
       }
     }
 
+    protected function loadFromCache(){
+      if($this->cache_path){
+        if(file_exists($this->cachePath())){
+          return file_get_contents($this->cachePath());
+        }
+      }
+    }
+
+    protected function cacheMTime(){
+      if($this->cache_path){
+        if(file_exists($this->cachePath())){
+          return filemtime($this->cachePath());
+        }
+      }
+    }
+
+    protected function newDocumentFromCache(){
+      return new ReevooMarkDocument($this->loadFromCache(), $this->cacheMTime());
+    }
+
     protected function loadFromRemote(){
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $this->remote_url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
       curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000);
-      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/4");
+      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/5");
       curl_setopt($ch, CURLOPT_REFERER, "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
       curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 2000);
       curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -148,10 +157,10 @@
     }
 
     protected function getData(){
-      $doc = new ReevooMarkDocument($this->loadFromCache());
+      $doc = $this->newDocumentFromCache();
       if($doc->hasExpired())
       {
-        $remote_doc = new ReevooMarkDocument($this->loadFromRemote());
+        $remote_doc = new ReevooMarkDocument($this->loadFromRemote(), time());
         if(!$doc->isCachableResponse() || $remote_doc->isCachableResponse())
         {
           $this->saveToCache($remote_doc->data);

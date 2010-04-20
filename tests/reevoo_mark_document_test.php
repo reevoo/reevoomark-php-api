@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/../reevoo_mark.php');
 
 class ReevooMarkDocumentTest extends UnitTestCase {
   function document(){
-    return new ReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"));
+    return new ReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"), 0);
   }
 
   function test_should_be_a_valid_document(){
@@ -19,10 +19,6 @@ class ReevooMarkDocumentTest extends UnitTestCase {
   function test_should_have_max_age(){
     $this->assertEqual(2545, $this->document()->maxAge());
   }
-  
-  function test_should_have_date(){
-    $this->assertEqual(1249134093, $this->document()->date());
-  }
 }
 
 class CurrentReevooMarkDocument extends ReevooMarkDocument {
@@ -34,7 +30,7 @@ class CurrentReevooMarkDocument extends ReevooMarkDocument {
 
 class NoneExpiredReevooMarkDocumentTest extends UnitTestCase {
   function document(){
-    return new CurrentReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"));
+    return new CurrentReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"), time());
   }
 
   function test_should_be_a_valid_document(){
@@ -48,7 +44,7 @@ class NoneExpiredReevooMarkDocumentTest extends UnitTestCase {
 
 class ReevooMarkDocumentWithBlankLinesTest extends UnitTestCase {
   function document(){
-    return new ReevooMarkDocument("HTTP/1.1 200 OK\nContent-Type: text/plain\n\na\n\nb\n");
+    return new ReevooMarkDocument("HTTP/1.1 200 OK\nContent-Type: text/plain\n\na\n\nb\n", 0);
   }
 
   function test_should_extract_the_body(){

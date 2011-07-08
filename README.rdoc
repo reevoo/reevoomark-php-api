@@ -1,0 +1,119 @@
+= reevoomark-php-api
+
+* http://github.com/reevoo/reevoomark-php-api
+* http://labs.reevoo.com
+* http://mark.reevoo.com
+* http://www.reevoo.com
+
+== DESCRIPTION:
+
+The reevoomark-php-api is a PHP tag library for certified ReevooMark partners
+wanting to quickly and easily integrate Reevoo content into their sites server-
+side.  Equivalent server-side tag libraries are available for other programming
+languages at the {ReevooMark github repository}[http://github.com/reevoo].
+
+Although this library and the source are provided under an MIT license, use of the 
+Reevoo content requires you to be a certified ReevooMark partner.
+
+== FEATURES:
+
+* Server-side inclusion of Reevoo content
+* Included CSS for display of Reevoo content
+* Server-side caching of content respecting the cache control rules set by Reevoo
+
+== CACHING:
+
+Feel free to take a look at / amend / replace the default caching infrastructure provided as long as you adhere to the headers provided alongside the content
+
+== SUPPORT:
+
+For certified ReevooMark partners, support can be obtained by mailing [mailto:operations@reevoo.com].
+
+The {bug tracker}[http://github.com/reevoo/reevoomark-php-api/issues]
+is available here:
+
+  * http://github.com/reevoo/reevoomark-php-api/issues
+
+== SYNOPSIS:
+
+  # Include the relevant CSS; for the pricing widget use:
+  <link href="http://mark.reevoo.com/stylesheets/best_offers/base.css" rel="stylesheet" />
+  # For the reviews content use:
+  <link rel="stylesheet" href="http://mark.reevoo.com/stylesheets/reevoomark/reevoo_reviews.css" type="text/css" />
+
+  # Include your customer-specific JavaScript
+  <script src="http://mark.reevoo.com/reevoomark/<TRKREF>.js" type="text/javascript"></script>
+  # (replacing TRKREF with the customer reference you were issues by Operations)
+
+  # Include the PHP library
+  <? include("reevoomark-php-api/reevoo_mark.php"); ?>
+
+  # Create a cache directory to store temporary HTTP fragments
+  mkdir reevoo_cache
+
+  # Render price offers:
+  <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/widgets/offers", "<TRKREF>", "<SKU>") ?>
+  # (replacing TRKREF with the customer reference you were issues by Operations)
+  <? if ($reevoo_mark->offerCount() > 0) { ?>
+    <? $reevoo_mark->render(); ?>
+  <? } ?>
+
+  # Note that additional headers are available for you to inspect and build appropriate logic against.  For a full list:
+  <ul>
+    <? foreach ( $reevoo_mark->datas()->headers() as $header => $value) { ?>
+      <li><? echo "${header} = ${value}"?></li>
+    <? } ?>
+  </ul>
+
+
+  # And/or render review content:
+  <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/reevoomark/first_two_reviews.html", "<TRKREF>", "<SKU>") ?>
+
+  <? if( $reevoo_mark->reviewCount() > 0 ){ ?>
+    <?php $reevoo_mark->render(); ?>
+  <? }else{ ?>
+    <h1>No reviews</h1>
+  <? } ?>
+
+
+== REQUIREMENTS:
+
+* jQuery
+
+
+== INSTALL:
+
+Download and install the latest version of the reevoomark-php-api taglibrary
+[https://github.com/reevoo/reevoomark-php-api/downloads]
+
+
+== LICENSE:
+
+This software is released under the MIT license.  Only certified ReevooMark partners
+are licensed to display Reevoo content on their sites.  Contact [mailto:sales@reevoo.com] for
+more information.
+
+(The MIT License)
+
+Copyright (c) 2008 - 2010:
+
+* {Reevoo}[http://www.reevoo.com]
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

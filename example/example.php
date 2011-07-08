@@ -1,7 +1,6 @@
 <link href="http://mark.local/stylesheets/best_offers/base.css" rel="stylesheet" />
 <? include("reevoomark-php-api/reevoo_mark.php"); ?>
 
-<? echo 'holly shit batman!'; ?>
 <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.local/widgets/offers", "PCA", "3221438") ?>
 <ul>
 <? foreach ( $reevoo_mark->datas()->headers() as $header => $value) { ?>

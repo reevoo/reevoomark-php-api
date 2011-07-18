@@ -67,7 +67,7 @@ is available here:
 
 
   # And/or render review content:
-  <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/reevoomark/first_two_reviews.html", "<TRKREF>", "<SKU>") ?>
+  <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/reevoomark/en-GB/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
 
   <? if( $reevoo_mark->reviewCount() > 0 ){ ?>
     <?php $reevoo_mark->render(); ?>

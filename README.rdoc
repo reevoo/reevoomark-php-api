@@ -66,7 +66,7 @@ is available here:
   </ul>
 
 
-  # And/or render review content:
+  # And/or render embedded review content:
   <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/reevoomark/en-GB/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
 
   <? if( $reevoo_mark->reviewCount() > 0 ){ ?>
@@ -74,6 +74,17 @@ is available here:
   <? }else{ ?>
     <h1>No reviews</h1>
   <? } ?>
+
+
+  # And/or inject first two reviews onto page:
+  # Note that even if there are no reviews the content should still be rendered for tracking purposes
+  <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.reevoo.com/reevoomark/first_two_reviews.html", "<TRKREF>", "<SKU>") ?>
+
+  <? if( $reevoo_mark->reviewCount() == 0 ){ ?>
+    <h1>No reviews</h1>
+  <? } ?>
+  <?php $reevoo_mark->render(); ?>
+
 
 
 == REQUIREMENTS:

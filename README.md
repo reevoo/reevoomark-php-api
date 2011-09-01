@@ -38,7 +38,7 @@ Include the PHP library (make sure you use the correct path to the reevoo_mark.p
 <? include("reevoo_mark.php"); ?>
 ```
 
-Render embedded review content. Make sure you replace <reevoo_cache> with the path of a directory that can be used to cache review content:
+Render embedded review content. Make sure you replace `<reevoo_cache>` with the path of a directory that can be used to cache review content:
 
 ``` php
 <? $reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/en-GB/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>

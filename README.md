@@ -18,6 +18,20 @@ For ReevooMark and Reevoo Essentials customers, support can be obtained by email
 
 There is also a [bug tracker](https://github.com/reevoo/reevoomark-php-api/issues) available.
 
+##Installation
+
+Add Pearhub as a PEAR channel if you don't already have it:
+
+```
+pear channel-discover pearhub.org
+```
+
+Install the ReevooMark API:
+
+```
+pear install pearhub/reevoomark_php_api
+```
+
 ##Implementation
 
 Include the relevant CSS. For product reviews use:

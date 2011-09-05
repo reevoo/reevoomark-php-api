@@ -1,7 +1,7 @@
 <?php
 
 require_once('simpletest/autorun.php');
-require_once(dirname(__FILE__).'/../reevoo_mark.php');
+require_once(dirname(__FILE__).'/../lib/reevoo_mark.php');
 
 Mock::generatePartial('ReevooMark', 'MockedReevooMark', array('loadFromCache', 'saveToCache', 'loadFromRemote'));
 

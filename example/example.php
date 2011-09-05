@@ -1,5 +1,5 @@
 <link href="http://mark.local/stylesheets/best_offers/base.css" rel="stylesheet" />
-<? include("reevoomark-php-api/reevoo_mark.php"); ?>
+<? include("reevoomark-php-api/lib/reevoo_mark.php"); ?>
 
 <? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.local/widgets/offers", "PCA", "3221438") ?>
 <ul>

@@ -37,7 +37,7 @@ pear install pearhub/reevoomark_php_api
 Include the relevant CSS. For product reviews use:
 
 ``` html
-<link rel="stylesheet" href="http://mark.reevoo.com/stylesheets/reevoomark/reevoo_reviews.css" type="text/css" />
+<link rel="stylesheet" href="http://mark.reevoo.com/stylesheets/reevoomark/embedded_reviews.css" type="text/css" />
 ```
 
 Include your customer specific Reevoo JavaScript:
@@ -55,7 +55,7 @@ Include the PHP library (make sure you use the correct path to the reevoo_mark.p
 Render embedded review content. Make sure you replace `<reevoo_cache>` with the path of a directory that can be used to cache review content:
 
 ``` php
-<? $reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/en-GB/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
+<? $reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
 
 <? if( $reevoo_mark->reviewCount() > 0 ){ ?>
   <?php $reevoo_mark->render(); ?>

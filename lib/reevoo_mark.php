@@ -146,7 +146,7 @@
       curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000);
       curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/6");
       curl_setopt($ch, CURLOPT_REFERER, "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
-      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 2000);
+      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
       curl_setopt($ch, CURLOPT_HEADER, 1);
 
       if($result = curl_exec($ch))

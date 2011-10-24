@@ -10,6 +10,7 @@
   $test->addTestCase(new ReevooMarkDocumentTest());
   $test->addTestCase(new NoneExpiredReevooMarkDocumentTest());
   $test->addTestCase(new ReevooMarkDocumentWithBlankLinesTest());
+  $test->addTestCase(new ReevooMarkDocumentWithAHeaderModifiedByAProxyTest());
   $test->run(new TextReporter());
   
 ?>

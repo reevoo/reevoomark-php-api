@@ -21,7 +21,7 @@
     function statusCode(){
       $headers = split("\n", $this->head, 2);
       $status_line = $headers[0];
-      if(preg_match("/^HTTP\/1.1 ([0-9]{3})/", $status_line, $matches))
+      if(preg_match("/^HTTP\/[^ ]* ([0-9]{3})/", $status_line, $matches))
         return $matches[1];
       else
         return 500;

@@ -52,6 +52,16 @@ class ReevooMarkDocumentWithBlankLinesTest extends UnitTestCase {
   }
 }
 
+class ReevooMarkDocumentWithAHeaderModifiedByAProxyTest extends UnitTestCase {
+  function document(){
+    return new ReevooMarkDocument("HTTP/1.0 200 OK\nContent-Type: text/plain\n\na\n\nb\n", 0);
+  }
+
+  function test_should_extract_the_body(){
+    $this->assertEqual("a\n\nb\n", $this->document()->body());
+  }
+}
+
 class ReevooMarkDocumentWithNoContent extends UnitTestCase {
   function test_should_have_a_500_status(){
     $this->assertEqual(500, new ReevooMarkDocument(false).statusCode);

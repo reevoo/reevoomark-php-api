@@ -86,7 +86,8 @@
       $this->cache_path = $cache_path;
       $this->retailer = $retailer;
       $this->sku = $sku;
-      $this->remote_url = "{$mark_url}?sku=$this->sku&retailer=$this->retailer";
+      $sep = preg_match("/\?/",$mark_url) ? "&" : "?";
+      $this->remote_url = "{$mark_url}{$sep}sku=$this->sku&retailer=$this->retailer";
       $this->data = $this->getData();
     }
 
@@ -148,7 +149,7 @@
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
       curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000);
-      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/6");
+      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/8");
       curl_setopt($ch, CURLOPT_REFERER, "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
       curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
       curl_setopt($ch, CURLOPT_HEADER, 1);

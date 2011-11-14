@@ -98,6 +98,10 @@
       return $this->data->header("X-Reevoo-OfferCount");
     }
 
+    function conversationCount(){
+      return $this->data->header("X-Reevoo-ConversationCount");
+    }
+
     function bestPrice(){
       return $this->data->header("X-Reevoo-BestPrice");
     }

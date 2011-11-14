@@ -52,3 +52,5 @@ Render price offers. Make sure to replace `<SKU>` and `<TRKREF>` with the approp
   <? $reevoo_mark->render(); ?>
 <? } ?>
 ```
+
+Or to use price comparison in USD change the url to `http://mark.reevoo.com/widgets/offers?currency=USD`

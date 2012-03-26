@@ -64,6 +64,14 @@ Render embedded review content. Make sure you replace `<reevoo_cache>` with the 
 <? } ?>
 ```
 
+## Tracking
+
+If you display the reviews in a tabbed display, or otherwise require visitors to your site to click an element before seeing the embedded reviews, add the following onclick attribute to track the clickthroughs:
+
+``` html
+  onclick="ReevooMark.track_click_through(‘<SKU>’)”
+```
+
 ##License
 
 This software is released under the MIT license.  Only certified ReevooMark partners

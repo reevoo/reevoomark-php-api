@@ -56,7 +56,12 @@ Render embedded review content. Make sure you replace `<reevoo_cache>` with the 
 
 ``` php
 <? $reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
+<?php $reevoo_mark->render(); ?>
+```
 
+By default Reevoo will display helpful pages to the user when there are no reviews available. If you'd like to handle this yourself, you can check the review count:
+
+``` php
 <? if( $reevoo_mark->reviewCount() > 0 ){ ?>
   <?php $reevoo_mark->render(); ?>
 <? }else{ ?>
@@ -71,10 +76,6 @@ If you display the reviews in a tabbed display, or otherwise require visitors to
 ``` html
   onclick="ReevooMark.track_click_through(‘<SKU>’)”
 ```
-
-## Headers
-
-By default, Reevoo will render a helpful page to the user when there are no reviews available. You can handle this yourself by checking the ```X-Reevoo-ReviewCount``` header.
 
 ##License
 

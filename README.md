@@ -1,4 +1,4 @@
-#reevoomark-php-api
+# reevoomark-php-api
 
 ##Description
 
@@ -76,6 +76,10 @@ If you display the reviews in a tabbed display, or otherwise require visitors to
 ``` html
   onclick="ReevooMark.track_click_through(‘<SKU>’)”
 ```
+
+## Overall rating
+
+If you get in touch with Reevoo, we can switch an overall ratings section on at the top of inline reviews on a per-retailer basis. This contains an overall score, a summary and the score breakdowns. Your container must be at least 650px for the score breakdowns to be shown. The absolute minimum width for inline reviews is 350px.
 
 ##License
 

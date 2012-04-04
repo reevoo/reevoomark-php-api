@@ -59,6 +59,12 @@ Render embedded review content. Make sure you replace `<reevoo_cache>` with the 
 <?php $reevoo_mark->render(); ?>
 ```
 
+It is also possible to specify locale and the number of reviews you'd like in the URI:
+
+```html
+http://mark.reevoo.com/reevoomark/fr-FR/10/embeddable_reviews.html
+```
+
 By default Reevoo will display helpful pages to the user when there are no reviews available. If you'd like to handle this yourself, you can check the review count:
 
 ``` php

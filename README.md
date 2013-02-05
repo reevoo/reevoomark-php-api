@@ -85,7 +85,7 @@ If you display the reviews in a tabbed display, or otherwise require visitors to
 
 ## Overall rating
 
-The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns. Your container must be at least 650px for the score breakdowns to be shown. The absolute minimum width for inline reviews is 350px.
+The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns. 
 
 ##License
 

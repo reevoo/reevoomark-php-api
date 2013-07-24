@@ -48,15 +48,17 @@ Include your customer specific Reevoo JavaScript:
 
 Include the PHP library (make sure you use the correct path to the reevoo_mark.php file):
 
-``` php
-<? include("reevoo_mark.php"); ?>
+```
+{php}
+  include("reevoo_mark.php");
+{/php}
 ```
 
 Render embedded review content. Make sure you replace `<reevoo_cache>` with the path of a directory that can be used to cache review content:
 
-``` php
-<? $reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>") ?>
-<?php $reevoo_mark->render(); ?>
+```
+{$reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>")}
+{$reevoo_mark->render()}
 ```
 
 It is also possible to specify locale and the number of reviews you'd like in the URI:
@@ -67,13 +69,15 @@ http://mark.reevoo.com/reevoomark/fr-FR/10/embeddable_reviews.html
 
 By default Reevoo will display helpful pages to the user when there are no reviews available. If you'd like to handle this yourself, you can check the review count:
 
-``` php
-<? if( $reevoo_mark->reviewCount() > 0 ){ ?>
-  <?php $reevoo_mark->render(); ?>
-<? }else{ ?>
-  <h1>No reviews</h1>
-<? } ?>
 ```
+{if $reevoo_mark->reviewCount() > 0}
+  {$reevoo_mark->render()}
+{else}
+  <h1>No reviews</h1>
+{/if}
+```
+
+Note: The examples above use [Smarty code](http://www.smarty.net/docs/en/what.is.smarty.tpl). For the standard PHP version, click [here](https://github.com/reevoo/reevoomark-php-api#implementation).
 
 ## Tracking
 
@@ -85,7 +89,7 @@ If you display the reviews in a tabbed display, or otherwise require visitors to
 
 ## Overall rating
 
-The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns. 
+The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns.
 
 ##License
 

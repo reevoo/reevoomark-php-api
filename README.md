@@ -75,6 +75,8 @@ By default Reevoo will display helpful pages to the user when there are no revie
 <? } ?>
 ```
 
+Note: If you are using [Smarty code](http://www.smarty.net/docs/en/what.is.smarty.tpl), click [here](https://github.com/reevoo/reevoomark-php-api/tree/smarty_php#implementation).
+
 ## Tracking
 
 If you display the reviews in a tabbed display, or otherwise require visitors to your site to click an element before seeing the embedded reviews, add the following onclick attribute to track the clickthroughs:
@@ -85,7 +87,7 @@ If you display the reviews in a tabbed display, or otherwise require visitors to
 
 ## Overall rating
 
-The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns. 
+The overall rating section at the top of inline reviews contains an overall score, a summary and the score breakdowns.
 
 ##License
 

@@ -71,7 +71,9 @@ By default Reevoo will display helpful pages to the user when there are no revie
 
 ```
 {if $reevoo_mark->reviewCount() > 0}
-  {$reevoo_mark->render()}
+  {php}
+    $reevoo_mark->render();
+  {/php}
 {else}
   <h1>No reviews</h1>
 {/if}

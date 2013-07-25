@@ -46,6 +46,8 @@ Include your customer specific Reevoo JavaScript:
 <script src="http://mark.reevoo.com/reevoomark/<TRKREF>.js" type="text/javascript"></script>
 ```
 
+Note: The URL should not include the angled brackets, e.g. `/reevoomark/EXAMPLE.js`
+
 Include the PHP library (make sure you use the correct path to the reevoo_mark.php file):
 
 ``` php

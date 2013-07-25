@@ -46,6 +46,8 @@ Include your customer specific Reevoo JavaScript:
 <script src="http://mark.reevoo.com/reevoomark/<TRKREF>.js" type="text/javascript"></script>
 ```
 
+Note: The URL should not include the angled brackets, e.g. `/reevoomark/EXAMPLE.js`
+
 Include the PHP library (make sure you use the correct path to the reevoo_mark.php file):
 
 ```
@@ -58,7 +60,10 @@ Render embedded review content. Make sure you replace `<reevoo_cache>` with the 
 
 ```
 {$reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>")}
-{$reevoo_mark->render()}
+
+{php}
+  $reevoo_mark->render();
+{/php}
 ```
 
 It is also possible to specify locale and the number of reviews you'd like in the URI:
@@ -80,6 +85,8 @@ By default Reevoo will display helpful pages to the user when there are no revie
 ```
 
 Note: The examples above use [Smarty code](http://www.smarty.net/docs/en/what.is.smarty.tpl). For the standard PHP version, click [here](https://github.com/reevoo/reevoomark-php-api#implementation).
+
+Disclaimer: The Smarty code examples here have not been tested as we primarily use other technologies. If you notice a problem, please open an issue in GitHub. Thanks
 
 ## Tracking
 

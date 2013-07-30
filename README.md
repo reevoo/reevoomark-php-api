@@ -51,19 +51,19 @@ Note: The URL should not include the angled brackets, e.g. `/reevoomark/EXAMPLE.
 Include the PHP library (make sure you use the correct path to the reevoo_mark.php file):
 
 ```
-{php}
+<?php
   include("reevoo_mark.php");
-{/php}
+?>
 ```
 
 Render embedded review content. Make sure you replace `<reevoo_cache>` with the path of a directory that can be used to cache review content:
 
 ```
-{$reevoo_mark = new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>")}
+<?php
+  $smarty->assign('reevoo_mark', new ReevooMark("<reevoo_cache>", "http://mark.reevoo.com/reevoomark/embeddable_reviews.html", "<TRKREF>", "<SKU>"));
+?>
 
-{php}
-  $reevoo_mark->render();
-{/php}
+{$reevoo_mark->render()}
 ```
 
 It is also possible to specify locale and the number of reviews you'd like in the URI:
@@ -76,9 +76,7 @@ By default Reevoo will display helpful pages to the user when there are no revie
 
 ```
 {if $reevoo_mark->reviewCount() > 0}
-  {php}
-    $reevoo_mark->render();
-  {/php}
+  {$reevoo_mark->render()}
 {else}
   <h1>No reviews</h1>
 {/if}

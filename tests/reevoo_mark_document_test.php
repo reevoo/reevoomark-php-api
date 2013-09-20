@@ -63,8 +63,12 @@ class ReevooMarkDocumentWithAHeaderModifiedByAProxyTest extends UnitTestCase {
 }
 
 class ReevooMarkDocumentWithNoContent extends UnitTestCase {
+  function document(){
+    return new ReevooMarkDocument(false, 0);
+  }
+
   function test_should_have_a_500_status(){
-    $this->assertEqual(500, new ReevooMarkDocument(false).statusCode);
+    $this->assertEqual(500, $this->document()->statusCode());
   }
 }
 

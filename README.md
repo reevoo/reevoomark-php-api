@@ -1,5 +1,7 @@
 # reevoomark-php-api
 
+[![Build Status](https://travis-ci.org/reevoo/reevoomark-php-api.png?branch=master)](https://travis-ci.org/reevoo/reevoomark-php-api)
+
 ##Description
 
 The reevoomark-php-api is a PHP tag library for ReevooMark and Reevoo Essentials customers who want to quickly and easily integrate Reevoo content in to their sites server-side.

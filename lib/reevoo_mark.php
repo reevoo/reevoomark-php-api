@@ -5,7 +5,7 @@
 
     function __construct($data, $mtime){
       if($this->data = $data)
-        list($this->head, $this->body) = split("\n\n", $this->data, 2);
+        list($this->head, $this->body) = explode("\n\n", $this->data, 2);
       else
         $this->head = $this->body = null;
       $this->mtime = $mtime;
@@ -19,7 +19,7 @@
     }
 
     function statusCode(){
-      $headers = split("\n", $this->head, 2);
+      $headers = explode("\n", $this->head, 2);
       $status_line = $headers[0];
       if(preg_match("/^HTTP\/[^ ]* ([0-9]{3})/", $status_line, $matches))
         return $matches[1];
@@ -41,11 +41,11 @@
         return $this->headers;
       else
       {
-        $headers = split("\n", $this->head);
+        $headers = explode("\n", $this->head);
         array_shift($headers); // Status line is no use here
         $parsed_headers = Array();
         foreach($headers as $header){
-          list($key, $value) = split(":", $header, 2);
+          list($key, $value) = explode(":", $header, 2);
           $parsed_headers[strtolower($key)] = trim($value);
         }
         $this->headers = $parsed_headers;

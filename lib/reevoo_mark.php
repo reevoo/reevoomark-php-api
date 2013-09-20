@@ -29,6 +29,7 @@
 
     function header($name){
       $headers = $this->headers();
+      $name = strtolower($name);
       if(array_key_exists($name, $headers))
         return $headers[$name];
       else
@@ -45,7 +46,7 @@
         $parsed_headers = Array();
         foreach($headers as $header){
           list($key, $value) = split(":", $header, 2);
-          $parsed_headers[$key] = trim($value);
+          $parsed_headers[strtolower($key)] = trim($value);
         }
         $this->headers = $parsed_headers;
         return $this->headers;

@@ -1,5 +1,5 @@
 HTTP/1.1 200 OK
-Cache-Control: max-age=123, public
+cache-control: max-age=123, public
 Date: Sat, 01 Aug 2100 13:41:33 GMT
 Age: 0
 

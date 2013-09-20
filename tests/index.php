@@ -11,6 +11,6 @@
   $test->addTestCase(new NoneExpiredReevooMarkDocumentTest());
   $test->addTestCase(new ReevooMarkDocumentWithBlankLinesTest());
   $test->addTestCase(new ReevooMarkDocumentWithAHeaderModifiedByAProxyTest());
-  $test->run(new TextReporter());
+  exit ($test->run(new TextReporter()) ? 0 : 1);
   
 ?>

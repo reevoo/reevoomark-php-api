@@ -1,5 +1,5 @@
 task :test do
-  system( "php tests/index.php" )
+  raise unless system( "php tests/index.php" )
 end
 
 task :default => :test

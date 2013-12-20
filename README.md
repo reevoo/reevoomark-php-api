@@ -4,7 +4,7 @@
 
 ##Description
 
-The reevoomark-php-api is a PHP tag library for ReevooMark and Reevoo Essentials customers who want to quickly and easily integrate Reevoo content in to their sites server-side.
+The reevoomark-php-api is a PHP tag library for Reevoo Ratings & Reviews customers who want to quickly and easily integrate Reevoo content in to their sites server-side.
 
 ##Other Languages
 Tag libraries are also available for [.NET](https://github.com/reevoo/reevoomark-dotnet-api) and [Java](https://github.com/reevoo/reevoomark-java-api).
@@ -16,7 +16,7 @@ Tag libraries are also available for [.NET](https://github.com/reevoo/reevoomark
 * Server-side caching of content that respects the cache control rules set by Reevoo.
 
 ##Support
-For ReevooMark and Reevoo Essentials customers, support can be obtained by emailing <operations@reevoo.com>.
+For Reevoo Ratings & Reviews customers, support can be obtained by emailing <operations@reevoo.com>.
 
 There is also a [bug tracker](https://github.com/reevoo/reevoomark-php-api/issues) available.
 
@@ -126,7 +126,7 @@ ReevooMark.auto_scale()
 
 ## Tracking
 
-If you display the reviews in a tabbed display, or otherwise require visitors to your site to click an element before seeing the embedded reviews, add the following onclick attribute to track the clickthroughs.
+If you display the reviews in a tabbed display, or require visitors to your site to click an element before seeing the embedded reviews, add the following onclick attribute to track the clickthroughs.
 
 ``` html
   onclick="ReevooMark.track_click_through(‘<SKU>’)”
@@ -138,7 +138,7 @@ The overall rating section at the top of inline reviews contains an overall scor
 
 ##License
 
-This software is released under the MIT license.  Only certified ReevooMark partners
+This software is released under the MIT license.  Only certified Reevoo partners
 are licensed to display Reevoo content on their sites.  Contact <sales@reevoo.com> for
 more information.
 

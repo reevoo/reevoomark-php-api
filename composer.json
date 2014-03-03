@@ -1,0 +1,15 @@
+{
+    "name": "reevoo/reevoomark-php-api",
+    "description": "The reevoomark-php-api is a PHP tag library for Reevoo Ratings & Reviews customers who want to quickly and easily integrate Reevoo content in to their sites server-side.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Reevoo Developers",
+            "email": "developers@reevoo.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+
+    }
+}

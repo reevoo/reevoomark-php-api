@@ -22,16 +22,22 @@ There is also a [bug tracker](https://github.com/reevoo/reevoomark-php-api/issue
 
 ##Installation
 
-Add Pearhub as a PEAR channel if you don't already have it:
+Get Composer from [https://getcomposer.org/download/](here) and install it.
+
+Add the reevoo tag lib to your composer.json like so:
 
 ```
-pear channel-discover pearhub.org
+{
+    "require": {
+        "reevoo/reevoomark-php-api": "*"
+    }
+}
 ```
 
-Install the ReevooMark API:
+and then do:
 
 ```
-pear install pearhub/reevoomark_php_api
+$ php composer.phar install
 ```
 
 ##Implementation

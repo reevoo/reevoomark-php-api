@@ -1,20 +1,9 @@
 <link href="http://mark.local/stylesheets/best_offers/base.css" rel="stylesheet" />
-<? include("reevoomark-php-api/lib/reevoo_mark.php"); ?>
+<script src="//mark.reevoo.com/reevoomark/WDC.js?async=true"></script>
 
-<? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.local/widgets/offers", "PCA", "3221438") ?>
-<ul>
-<? foreach ( $reevoo_mark->datas()->headers() as $header => $value) { ?>
-  <li><? echo "${header} = ${value}"?></li>
-<? } ?>
-</ul>
+<? include("../../reevoomark-php-api/lib/reevoo_mark.php"); ?>
 
-<pre>
-&lt;? $reevoo_mark = new ReevooMark("reevoo_cache", "http://mark.local/widgets/offers", "PCA", "3221438") ?&gt;
-&lt;? if ($reevoo_mark->offerCount() > 0) { ?&gt;
-&lt;? $reevoo_mark->render(); ?&gt;
-&lt;? } ?&gt;
-</pre>
-
+<? $reevoo_mark = new ReevooMark("/Users/alexmalkov/reevoo/reevoomark-php-api/reevoo_cache", "mark.reevoo.com/widgets/offers", "WDC", "129609") ?>
 
 <? if ($reevoo_mark->offerCount() > 0) { ?>
 <? $reevoo_mark->render(); ?>

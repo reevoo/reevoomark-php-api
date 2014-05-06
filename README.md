@@ -55,18 +55,19 @@ If you don't need https you can include the JavaScript like this:
 ``` html
 <script id="reevoomark-loader">
   (function() {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'http://cdn.mark.reevoo.com/assets/reevoo_mark.js';
-      var s = document.getElementById('reevoomark-loader');
-      s.parentNode.insertBefore(script, s);
-    })();
-    afterReevooMarkLoaded = [];
-    afterReevooMarkLoaded.push(function(){
-        ReevooApi.load('TRKREF', function(retailer){
-          retailer.init_badges();
-        });
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'http://cdn.mark.reevoo.com/assets/reevoo_mark.js';
+    var s = document.getElementById('reevoomark-loader');
+    s.parentNode.insertBefore(script, s);
+  })();
+  afterReevooMarkLoaded = [];
+  afterReevooMarkLoaded.push(function(){
+    ReevooApi.load('TRKREF', function(retailer){
+      retailer.init_badges();
+      retailer.init_reputation_badges();
     });
+  });
 </script>
 ```
 
@@ -74,14 +75,14 @@ If you do need to use https you can include the JavaScript like this:
 
 ``` html
 <script id="reevoomark-loader">
- (function() {
-   var trkref = 'TRKREF';
-   var myscript = document.createElement('script');
-   myscript.type = 'text/javascript';
-   myscript.src=('//mark.reevoo.com/reevoomark/'+trkref+'.js?async=true');
-   var s = document.getElementById('reevoomark-loader');
-   s.parentNode.insertBefore(myscript, s);
- })();
+  (function() {
+    var trkref = 'TRKREF';
+    var myscript = document.createElement('script');
+    myscript.type = 'text/javascript';
+    myscript.src=('//mark.reevoo.com/reevoomark/'+trkref+'.js?async=true');
+    var s = document.getElementById('reevoomark-loader');
+    s.parentNode.insertBefore(myscript, s);
+  })();
 </script>
 ```
 

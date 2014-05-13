@@ -81,14 +81,14 @@
 
 
   class ReevooMark {
-    protected $cache_path, $retailer, $sku, $data, $remote_url;
+    protected $cache_path, $trkref, $sku, $data, $remote_url;
 
-    function ReevooMark($cache_path, $mark_url, $retailer, $sku){
+    function ReevooMark($cache_path, $mark_url, $trkref, $sku){
       $this->cache_path = $cache_path;
-      $this->retailer = $retailer;
+      $this->trkref = $trkref;
       $this->sku = $sku;
       $sep = preg_match("/\?/",$mark_url) ? "&" : "?";
-      $this->remote_url = "{$mark_url}{$sep}sku=$this->sku&retailer=$this->retailer";
+      $this->remote_url = "{$mark_url}{$sep}sku=$this->sku&trkref=$this->trkref";
       $this->data = $this->getData();
     }
 

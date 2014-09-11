@@ -131,14 +131,14 @@ class ReevooMarkTest extends UnitTestCase {
   function test_should_generate_cachepath_from_sku(){
     $rvm = new MockedReevooMarkWithPublicCachePath();
     $rvm->ReevooMark("foo", "http://example.com/mark_url", "AAA", "1234567890");
-    $digest = md5("http://example.com/mark_url?sku=1234567890&retailer=AAA");
+    $digest = md5("http://example.com/mark_url?sku=1234567890&trkref=AAA");
     $this->assertEqual("foo/$digest.cache", $rvm->getCachePath());
   }
 
   function test_should_generate_remote_url(){
     $rvm = new MockedReevooMarkWithPublicCachePath();
     $rvm->ReevooMark("foo", "http://example.com/mark_url", "AAA", "1234567890");
-    $this->assertEqual("http://example.com/mark_url?sku=1234567890&retailer=AAA", $rvm->getRemoteUrl());
+    $this->assertEqual("http://example.com/mark_url?sku=1234567890&trkref=AAA", $rvm->getRemoteUrl());
   }
 }
 

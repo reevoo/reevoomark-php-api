@@ -3,143 +3,218 @@
 require_once('simpletest/autorun.php');
 require_once(dirname(__FILE__).'/../lib/reevoo_mark.php');
 
-Mock::generatePartial('ReevooMark', 'MockedReevooMark', array('loadFromCache', 'saveToCache', 'loadFromRemote'));
+Mock::generatePartial('ReevooMarkHttpClient', 'MockedReevooMarkHttpClient', array('getData'));
 
-class MockedReevooMarkWithPublicCachePath extends MockedReevooMark{
-  function getRemoteUrl(){
-    return $this->remote_url;
-  }
-
-  function getCachePath(){
-    return $this->cachePath();
+class MockedReevooMarkDocument extends ReevooMarkDocument {
+  function body() {
+    return "some data";
   }
 }
 
-
-
 class ReevooMarkTest extends UnitTestCase {
-  function test_with_no_cached_copy_we_should_load_from_remote_server(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", false);
 
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", file_get_contents(dirname(__FILE__)."/example_document.cache"));
-
-    $rvm->expectOnce("saveToCache", array(file_get_contents(dirname(__FILE__)."/example_document.cache")));
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("Here is my content.\n", $rvm->body());
+  function test_css_assets_prints_the_correct_css_link() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->cssAssets();
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<link rel="stylesheet" href="//mark.reevoo.com/stylesheets/reevoomark/embedded_reviews.css" type="text/css" />');
   }
 
-  function test_with_an_expired_cache_we_should_load_from_remote(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", file_get_contents(dirname(__FILE__)."/example_document.cache"));
-
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", file_get_contents(dirname(__FILE__)."/example_document_two.cache"));
-
-    $rvm->expectOnce("saveToCache", array(file_get_contents(dirname(__FILE__)."/example_document_two.cache")));
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("Some more content.\n", $rvm->body());
+  function test_product_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->productBadge(array("trkref" => "REV", "variant" => "stars", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoomark stars_variant" href="http://my_url/partner/REV/123"></a>');
   }
 
-  function test_with_an_empty_cache_and_a_broken_server_we_should_save_to_cache(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", false);
-
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", false);
-
-    $rvm->expectOnce("saveToCache", array(false));
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("", $rvm->body());
+  function test_conversations_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->conversationsBadge(array("trkref" => "REV", "variant" => "stars", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoomark reevoo-conversations stars_variant" href="http://my_url/partner/REV/123"></a>');
   }
 
-  function test_with_an_expired_cache_and_a_broken_server_we_should_load_from_cache(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", file_get_contents(dirname(__FILE__)."/example_document.cache"));
-
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", false);
-
-    $rvm->expectNever("saveToCache");
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("Here is my content.\n", $rvm->body());
+  function test_product_series_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->productSeriesBadge(array("trkref" => "REV", "variant" => "stars", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoomark stars_variant" href="http://my_url/partner/REV/series:123"></a>');
   }
 
-  function test_with_an_expired_cache_and_a_500ing_server_we_should_load_from_cache(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", file_get_contents(dirname(__FILE__)."/example_document.cache"));
-
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", "HTTP/1.1 500 My face is on fire\nHead:foo\n\nYour mum.");
-
-    $rvm->expectNever("saveToCache");
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("Here is my content.\n", $rvm->body());
+  function test_conversation_series_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->conversationSeriesBadge(array("trkref" => "REV", "variant" => "stars", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoomark reevoo-conversations stars_variant" href="http://my_url/partner/REV/series:123"></a>');
   }
 
-  function test_with_an_expired_cache_and_a_404ing_server_we_should_render_the_response(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", file_get_contents(dirname(__FILE__)."/example_document.cache"));
-
-    $rvm->expectOnce("loadFromRemote");
-    $rvm->setReturnValue("loadFromRemote", "HTTP/1.1 404 page not found\nHead:foo\n\nNo review found.");
-
-    $rvm->expectOnce("saveToCache", array("HTTP/1.1 404 page not found\nHead:foo\n\nNo review found."));
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual("", $rvm->body());
+  function test_overall_service_rating_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->overallServiceRatingBadge(array("trkref" => "REV", "variant" => "stars"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoo_reputation stars_variant" href="http://my_url/retailer/REV"></a>');
   }
 
-  function test_should_report_number_of_reviews(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", "HTTP/1.1 200 OK\nX-Reevoo-ReviewCount:10\n\nHello  10 reviews");
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual(10, $rvm->reviewCount());
+  function test_customer_service_rating_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->customerServiceRatingBadge(array("trkref" => "REV", "variant" => "stars"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoo_reputation customer_service stars_variant" href="http://my_url/retailer/REV"></a>');
   }
 
-  function test_should_report_the_best_price(){
-    $rvm = new MockedReevooMark();
-    $rvm->expectOnce("loadFromCache");
-    $rvm->setReturnValue("loadFromCache", "HTTP/1.1 200 OK\nX-Reevoo-BestPrice:£423\n\nHello  10 reviews");
-
-    $rvm->ReevooMark(null, "http://example.com/mark_url", "AAA", "1234567890");
-
-    $this->assertEqual('£423', $rvm->bestPrice());
+  function test_delivery_rating_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->deliveryRatingBadge(array("trkref" => "REV", "variant" => "stars"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoo_reputation delivery stars_variant" href="http://my_url/retailer/REV"></a>');
   }
 
-  function test_should_generate_cachepath_from_sku(){
-    $rvm = new MockedReevooMarkWithPublicCachePath();
-    $rvm->ReevooMark("foo", "http://example.com/mark_url", "AAA", "1234567890");
-    $digest = md5("http://example.com/mark_url?sku=1234567890&trkref=AAA");
-    $this->assertEqual("foo/$digest.cache", $rvm->getCachePath());
+  function test_product_reviews() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123"));
+    $rvm->productReviews(array("trkref" => "REV", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'some data');
   }
 
-  function test_should_generate_remote_url(){
-    $rvm = new MockedReevooMarkWithPublicCachePath();
-    $rvm->ReevooMark("foo", "http://example.com/mark_url", "AAA", "1234567890");
-    $this->assertEqual("http://example.com/mark_url?sku=1234567890&trkref=AAA", $rvm->getRemoteUrl());
+  function test_product_reviews_with_pagination() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1&client_url=http%3A%2F%2Flocalhost%2Freevoomark-php-api%2Ftests%2Freevoo_mark_test.php"));
+    $rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true));
   }
+
+  function test_product_reviews_with_pagination_and_custom_number_of_reviews() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=6&page=1&client_url=http%3A%2F%2Flocalhost%2Freevoomark-php-api%2Ftests%2Freevoo_mark_test.php"));
+    $rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "numberOfReviews" => 6));
+  }
+
+  function test_product_reviews_without_pagination_and_custom_number_of_reviews() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&reviews=6"));
+    $rvm->productReviews(array("trkref" => "REV", "sku" => "123", "numberOfReviews" => 6));
+  }
+
+  function test_product_reviews_with_locale() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1&locale=en-GB&client_url=http%3A%2F%2Flocalhost%2Freevoomark-php-api%2Ftests%2Freevoo_mark_test.php"));
+    $rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "locale" => "en-GB"));
+  }
+
+
+  function test_customer_experience_reviews() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV"));
+    $rvm->customerExperienceReviews(array("trkref" => "REV"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'some data');
+  }
+
+  function test_customer_experience_reviews_with_pagination() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=default&page=1&client_url=http%3A%2F%2Flocalhost%2Freevoomark-php-api%2Ftests%2Freevoo_mark_test.php"));
+    $rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true));
+  }
+
+  function test_customer_experience_reviews_with_pagination_and_custom_review_number() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=6&page=1&client_url=http%3A%2F%2Flocalhost%2Freevoomark-php-api%2Ftests%2Freevoo_mark_test.php"));
+    $rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "numberOfReviews" => 6));
+  }
+
+  function test_customer_experience_reviews_withouth_pagination_and_custom_review_number() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&reviews=6"));
+    $rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "numberOfReviews" => 6));
+  }
+
+  function test_customer_experience_reviews_with_locale() {
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&reviews=6&locale=en-GB"));
+    $rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "numberOfReviews" => 6, "locale" => "en-GB"));
+  }
+
+  function test_conversations() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://reevoo');
+    $http_client =  new MockedReevooMarkHttpClient("base_uri","cache_path");
+    $http_client->setReturnReference('getData', new MockedReevooMarkDocument("some data",123));
+    $rvm->http_client = $http_client;
+    $http_client->expectOnce("getData", array("/reevoomark/embeddable_conversations?trkref=REV&sku=123"));
+    $rvm->conversations(array("trkref" => "REV", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'some data');
+  }
+
+  function test_purchase_tracking_event() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->purchaseTrackingEvent(array("trkref" => "REV", "skus" => "111,222,3333", "value" => "250"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertPattern('/retailer\.track_purchase\(\"111,222,3333\"\.split\(\/\[ ,\]\+\/\), \"250\"\);/',$out1);
+  }
+
+  function test_propensity_to_buy_tracking_event() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->propensityToBuyTrackingEvent(array("trkref" => "REV", "action" => "download_brochure", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertPattern('/retailer\.Tracking\.ga_track_event\(\"Propensity to buy\", \"download_brochure\", \"123\"\);/',$out1);
+  }
+
 }
 
 ?>

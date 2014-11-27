@@ -92,9 +92,9 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 
 
 ```php
-  <?php $reevooMark->productBadge(array("sku" => "ABC")) ?>
-  <?php $reevooMark->productBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-  <?php $reevooMark->productBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->productBadge(array("sku" => "ABC")) ?>
+<?php $reevooMark->productBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
+<?php $reevooMark->productBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
 ```
 
 #### Conversations Badge
@@ -104,9 +104,9 @@ The ```sku``` is compulsory but ```trkref``` and ```variantName``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->conversationsBadge(array("sku" => "ABC")) ?>
-  <?php $reevooMark->conversationsBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-  <?php $reevooMark->conversationsBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->conversationsBadge(array("sku" => "ABC")) ?>
+<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
+<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
 ```
 
 ### Series Badges
@@ -118,9 +118,9 @@ The ```sku``` is compulsory and should be set to the series id. The ```trkref```
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->productSeriesBadge(array("sku" => "ABC")) ?>
-  <?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-  <?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->productSeriesBadge(array("sku" => "ABC")) ?>
+<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
+<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
 ```
 
 #### Conversations Badges
@@ -130,9 +130,9 @@ The ```sku``` is compulsory and should be set to the series id. The ```trkref```
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC")) ?>
-  <?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-  <?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC")) ?>
+<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
+<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
 ```
 
 ### Overall Service Rating Badges
@@ -143,9 +143,9 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 
 
 ```php
-  <?php $reevooMark->overallServiceRatingBadge() ?>
-  <?php $reevooMark->overallServiceRatingBadge(array("variantName" => "undecorated")) ?>
-  <?php $reevooMark->overallServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->overallServiceRatingBadge() ?>
+<?php $reevooMark->overallServiceRatingBadge(array("variantName" => "undecorated")) ?>
+<?php $reevooMark->overallServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
 ```
 
 ### Customer Service Rating Badges
@@ -155,9 +155,9 @@ The ```trkref``` and ```variantName``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->customerServiceRatingBadge() ?>
-  <?php $reevooMark->customerServiceRatingBadge(array("variantName" => "undecorated")) ?>
-  <?php $reevooMark->customerServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->customerServiceRatingBadge() ?>
+<?php $reevooMark->customerServiceRatingBadge(array("variantName" => "undecorated")) ?>
+<?php $reevooMark->customerServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
 ```
 
 ### Delivery Rating Badges
@@ -167,9 +167,9 @@ The ```trkref``` and ```variantName``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->deliveryRatingBadge() ?>
-  <?php $reevooMark->deliveryRatingBadge(array("variantName" => "undecorated")) ?>
-  <?php $reevooMark->deliveryRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->deliveryRatingBadge() ?>
+<?php $reevooMark->deliveryRatingBadge(array("variantName" => "undecorated")) ?>
+<?php $reevooMark->deliveryRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
 ```
 
 ### Embedded Product Review Content
@@ -180,10 +180,10 @@ Any combination of the optional attributes is possible.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->productReviews(array("sku" => "100A")) ?>
-  <?php $reevooMark->productReviews(array("sku" => "100A", "locale" => "en-GB", "numberOfReviews" => 5)) ?>
-  <?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10)) ?>
-  <?php $reevooMark->productReviews(array("sku" => "100A", "trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
+<?php $reevooMark->productReviews(array("sku" => "100A")) ?>
+<?php $reevooMark->productReviews(array("sku" => "100A", "locale" => "en-GB", "numberOfReviews" => 5)) ?>
+<?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10)) ?>
+<?php $reevooMark->productReviews(array("sku" => "100A", "trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
 ```
 
 If you set the ```paginated``` attribute to true, the embedded reviews will show pagination links.
@@ -193,9 +193,9 @@ If you would like to specify your own message you can pass attribute ```showEmpt
 and use return value of the ```productReviews()``` method that is false in this case.
 
 ```php
-  <?php if (!$reevooMark->productReviews(array("sku" => "100A", "showEmptyMessage" => false))): ?>
-    <h2>Sorry, no product reviews here</h2>
-  <?php endif ?>
+<?php if (!$reevooMark->productReviews(array("sku" => "100A", "showEmptyMessage" => false))): ?>
+  <h2>Sorry, no product reviews here</h2>
+<?php endif ?>
 ```
 
 ### Embedded Customer Experience Review Content
@@ -206,10 +206,10 @@ Any combination of the optional attributes is possible.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->customerExperienceReviews() ?>
-  <?php $reevooMark->customerExperienceReviews(array("numberOfReviews" => 5)) ?>
-  <?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10)) ?>
-  <?php $reevooMark->customerExperienceReviews(array("trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
+<?php $reevooMark->customerExperienceReviews() ?>
+<?php $reevooMark->customerExperienceReviews(array("numberOfReviews" => 5)) ?>
+<?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10)) ?>
+<?php $reevooMark->customerExperienceReviews(array("trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
 ```
 
 If you set the ```paginated``` attribute to true, the embedded reviews will show pagination links.
@@ -219,9 +219,9 @@ If you would like to specify your own message you can pass attribute ```showEmpt
 and use return value of the ```customerExperienceReviews()``` method that is false in this case.
 
 ```php
-  <?php if (!$reevooMark->customerExperienceReviews(array("showEmptyMessage" => false))): ?>
-    <h2>Sorry, no customer experience reviews here</h2>
-  <?php endif ?>
+<?php if (!$reevooMark->customerExperienceReviews(array("showEmptyMessage" => false))): ?>
+  <h2>Sorry, no customer experience reviews here</h2>
+<?php endif ?>
 ```
 
 ### Embedded Conversation Content
@@ -232,9 +232,9 @@ Any combination of the optional attributes is possible.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
-  <?php $reevooMark->conversations(array("sku" => "100A")) ?>
-  <?php $reevooMark->conversations(array("sku" => "100A", "locale" => "en-GB")) ?>
-  <?php $reevooMark->conversations(array("sku" => "100A", "trkref" => "REV")) ?>
+<?php $reevooMark->conversations(array("sku" => "100A")) ?>
+<?php $reevooMark->conversations(array("sku" => "100A", "locale" => "en-GB")) ?>
+<?php $reevooMark->conversations(array("sku" => "100A", "trkref" => "REV")) ?>
 ```
 
 If no conversations are available we will display default message in language specified by your ```locale```.
@@ -242,9 +242,9 @@ If you would like to specify your own message you can pass attribute ```showEmpt
 and use return value of the ```conversations()``` method that is false in this case.
 
 ```php
-  <?php if (!$reevooMark->conversations(array("sku" => "100A", "showEmptyMessage" => false))): ?>
-    <h2>Sorry, no conversations here</h2>
-  <?php endif ?>
+<?php if (!$reevooMark->conversations(array("sku" => "100A", "showEmptyMessage" => false))): ?>
+  <h2>Sorry, no conversations here</h2>
+<?php endif ?>
 ```
 
 
@@ -255,14 +255,14 @@ seeing the embedded reviews, add the following onclick attribute to track the cl
 
 If your trkref value is for example "REV" you would add:
 
-```HTML
-  onclick="ReevooMark_REV.track_click_through(‘<SKU>’)”
+```
+onclick="ReevooMark_REV.track_click_through(‘<SKU>’)”
 ```
 
 If your trkref value is for example "PIU" you would add:
 
-```HTML
-  onclick="ReevooMark_PIU.track_click_through(‘<SKU>’)”
+```
+onclick="ReevooMark_PIU.track_click_through(‘<SKU>’)”
 ```
 
 See how in examples above you need to put your trkref value as a suffix to the ```ReevooMark_``` part. Also remember to replace ```<SKU>``` by the sku of the actual product.
@@ -273,8 +273,8 @@ See how in examples above you need to put your trkref value as a suffix to the `
 If your site includes online shopping functionality you can use ```purchaseTrackingEvent()``` method on your "Order Confirmation Page".
 
 ``` php
-  <?php $reevooMark->purchaseTrackingEvent(array("skus" => "111,222,333", "value" => "250")) ?>
-  <?php $reevooMark->purchaseTrackingEvent(array("trkref" => "HYU", "skus" => "111,222,333", "value" => "250")) ?>
+<?php $reevooMark->purchaseTrackingEvent(array("skus" => "111,222,333", "value" => "250")) ?>
+<?php $reevooMark->purchaseTrackingEvent(array("trkref" => "HYU", "skus" => "111,222,333", "value" => "250")) ?>
 ```
 
 * ```skus``` attribute value is with a comma separated list of all the skus that have been purchased as part of the order.
@@ -291,8 +291,8 @@ This type of tracking is used as a substitute of purchase tracking for retailers
 These retailers can use ```propensityToBuyTrackingEvent()``` method which can be added to any page they wish on the site.
 
 ``` php
-  <?php $reevooMark->propensityToBuyTrackingEvent(array("action" => "Brochure")) ?>
-  <?php $reevooMark->propensityToBuyTrackingEvent(array("trkref" => "REV", "action" => "Locate Store", "sku" => "123")) ?>
+<?php $reevooMark->propensityToBuyTrackingEvent(array("action" => "Brochure")) ?>
+<?php $reevooMark->propensityToBuyTrackingEvent(array("trkref" => "REV", "action" => "Locate Store", "sku" => "123")) ?>
 ```
 
 * ```action``` attribute value is the type of event that you want to track, can be anything you want like "user visited the buy now page" or "user requested brochure" or "user requested a test drive", etc...

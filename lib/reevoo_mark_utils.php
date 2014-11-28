@@ -14,11 +14,15 @@ class ReevooMarkUtils {
   }
 
   function getVariant($options = array()) {
-    return $options['variant'] ? ' '.$options['variant'].'_variant' : '';
+    $variant = self::presenceKey($options, 'variant', '');
+    if ($variant != '') {
+      $variant = ' ' . $variant .'_variant';
+    }
+    return $variant;
   }
 
   function getTrkref($options = array()) {
-    return $options['trkref'] ? $options['trkref'] : $this->trkref;
+    return self::presenceKey($options, 'trkref', $this->trkref);
   }
 
   function getPaginationParams($options = array()) {

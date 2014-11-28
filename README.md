@@ -22,7 +22,7 @@ There is also a [bug tracker](https://github.com/reevoo/reevoomark-php-api/issue
 
 ##Installation
 
-Get Composer from [https://getcomposer.org/download/](here) and install it.
+Get Composer from [here](https://getcomposer.org/download/) and install it.
 
 Add the reevoo tag lib to your composer.json like so:
 

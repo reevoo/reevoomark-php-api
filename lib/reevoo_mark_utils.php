@@ -90,7 +90,8 @@ class ReevooMarkUtils {
 
   function getCurrentURL() {
     $protocol = "http";
-    if(self::presenceKey($_SERVER, "SERVER_PORT") == 443 || (!empty(self::presenceKey($_SERVER, "HTTPS")) && self::presenceKey($_SERVER, "HTTPS") == "on")) {
+    $https = self::presenceKey($_SERVER, "HTTPS");
+    if(self::presenceKey($_SERVER, "SERVER_PORT") == 443 || (!empty($https) && self::presenceKey($_SERVER, "HTTPS") == "on")) {
       $protocol .= "s";
       $protocol_port = self::presenceKey($_SERVER, "SERVER_PORT");
     } else {

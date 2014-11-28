@@ -2,7 +2,8 @@
 class ReevooMarkUtils {
 
   function ReevooMarkUtils($trkrefs) {
-    $this->trkref = explode(',', $trkrefs)[0];
+    $trkref_array = explode(',', $trkrefs);
+    $this->trkref = self::presenceKey($trkref_array,0);
   }
 
   static function presence($var, $default = null) {

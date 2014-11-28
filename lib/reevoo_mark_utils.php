@@ -23,7 +23,7 @@ class ReevooMarkUtils {
 
   function getPaginationParams($options = array()) {
     $page = self::presenceKey($_GET, 'reevoo_page', 1);
-    $paginated = $options['paginated'];
+    $paginated = self::presence($options['paginated']);
     if ($paginated) {
       $numberOfReviews = self::presence($options['numberOfReviews'], "default");
       $pagination_params = "&per_page={$numberOfReviews}&page={$page}";

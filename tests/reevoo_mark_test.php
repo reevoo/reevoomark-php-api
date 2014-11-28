@@ -2,12 +2,13 @@
 
 require_once('simpletest/autorun.php');
 require_once(dirname(__FILE__).'/../lib/reevoo_mark.php');
+require_once(dirname(__FILE__).'/../lib/reevoo_mark_utils.php');
 
 
 Mock::generatePartial('ReevooMarkHttpClient', 'MockedReevooMarkHttpClient', array('getData'));
 
 function encoded_current_url() {
-  return urlencode('http://' . $_SERVER["HTTP_HOST"] . $_SERVER["SCRIPT_NAME"]);
+  return urlencode('http://' . ReevooMarkUtils::presence($_SERVER["HTTP_HOST"], '') . ReevooMarkUtils::presence($_SERVER["SCRIPT_NAME"], ''));
 }
 
 class ReevooMarkTest extends UnitTestCase {

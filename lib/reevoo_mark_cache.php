@@ -1,5 +1,6 @@
 <?php
 require_once("reevoo_mark_document.php");
+require_once("reevoo_mark_utils.php");
 
 class ReevooMarkCache {
 
@@ -8,7 +9,7 @@ class ReevooMarkCache {
   }
 
   function saveToCache($data, $url_path){
-    if($this->cache_path){
+    if (ReevooMarkUtils::presence($this->cache_path)) {
       if(!file_exists($this->cache_path))
         mkdir($this->cache_path);
       file_put_contents($this->cachePath($url_path), $data);
@@ -16,7 +17,7 @@ class ReevooMarkCache {
   }
 
   function loadFromCache($url_path){
-    if($this->cache_path){
+    if (ReevooMarkUtils::presence($this->cache_path)) {
       if(file_exists($this->cachePath($url_path))){
         return file_get_contents($this->cachePath($url_path));
       }
@@ -24,7 +25,7 @@ class ReevooMarkCache {
   }
 
   function cacheMTime($url_path){
-    if($this->cache_path){
+    if (ReevooMarkUtils::presence($this->cache_path)) {
       if(file_exists($this->cachePath($url_path))){
         return filemtime($this->cachePath($url_path));
       }

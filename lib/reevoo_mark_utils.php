@@ -5,6 +5,10 @@ class ReevooMarkUtils {
     $this->trkref = explode(',', $trkrefs)[0];
   }
 
+  static function presence($var, $default = null) {
+    return empty($var) ? $default : $var;
+  }
+
   function getVariant($options = array()) {
     return $options['variant'] ? ' '.$options['variant'].'_variant' : '';
   }
@@ -14,10 +18,10 @@ class ReevooMarkUtils {
   }
 
   function getPaginationParams($options = array()) {
-    $page = $_GET['reevoo_page']? $_GET['reevoo_page'] : 1;
+    $page = self::presence($_GET['reevoo_page'], 1);
     $paginated = $options['paginated'];
     if ($paginated) {
-      $numberOfReviews = $options['numberOfReviews'] ? $options['numberOfReviews'] : "default";
+      $numberOfReviews = self::presence($options['numberOfReviews'], "default");
       $pagination_params = "&per_page={$numberOfReviews}&page={$page}";
     } elseif ($options['numberOfReviews']) {
       $pagination_params = "&reviews={$options['numberOfReviews']}";
@@ -28,7 +32,7 @@ class ReevooMarkUtils {
   }
 
   function getLocaleParam($options = array()) {
-    if ($options['locale']) {
+    if (isset($options['locale'])) {
       return "&locale={$options['locale']}";
     } else {
       return "";
@@ -36,7 +40,7 @@ class ReevooMarkUtils {
   }
 
   function getSortByParam($options = array()) {
-    if ($_GET['reevoo_sort_by']) {
+    if (isset($_GET['reevoo_sort_by'])) {
       return "&sort_by={$_GET['reevoo_sort_by']}";
     } else {
       return "";
@@ -44,7 +48,7 @@ class ReevooMarkUtils {
   }
 
   function getFilterParam($options = array()) {
-    if ($_GET['reevoo_filter']) {
+    if (isset($_GET['reevoo_filter'])) {
       return "&filter={$_GET['reevoo_filter']}";
     } else {
       return "";
@@ -52,7 +56,7 @@ class ReevooMarkUtils {
   }
 
   function getClientUrlParam($options = array()) {
-    if ($options['paginated']) {
+    if (isset($options['paginated'])) {
       $current_url = urlencode($this->getCurrentURL());
       return "&client_url={$current_url}";
     } else {
@@ -78,16 +82,16 @@ class ReevooMarkUtils {
 
   function getCurrentURL() {
     $protocol = "http";
-    if($_SERVER["SERVER_PORT"]==443 || (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=="on")) {
+    if(self::presence($_SERVER["SERVER_PORT"]) == 443 || (!empty(self::presence($_SERVER["HTTPS"])) && self::presence($_SERVER["HTTPS"]) == "on")) {
       $protocol .= "s";
-      $protocol_port = $_SERVER["SERVER_PORT"];
+      $protocol_port = self::presence($_SERVER["SERVER_PORT"]);
     } else {
       $protocol_port = 80;
     }
-    $host = $_SERVER["HTTP_HOST"];
-    $port = $_SERVER["SERVER_PORT"];
-    $request_path = $_SERVER["PHP_SELF"];
-    $querystr = $_SERVER["QUERY_STRING"];
+    $host = self::presence($_SERVER["HTTP_HOST"]);
+    $port = self::presence($_SERVER["SERVER_PORT"]);
+    $request_path = self::presence($_SERVER["PHP_SELF"]);
+    $querystr = self::presence($_SERVER["QUERY_STRING"]);
     $url = $protocol."://".$host.(($port!=$protocol_port && strpos($host,":")==-1)?":".$port:"").$request_path.(empty($querystr)?"":"?".$querystr);
     return $url;
   }

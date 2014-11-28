@@ -10,7 +10,7 @@ class ReevooMarkHttpClient {
   }
 
   function getData($url_path){
-    $doc = $this -> cache ->newDocumentFromCache($url_path);
+    $doc = $this->cache->newDocumentFromCache($url_path);
     if($doc->hasExpired())
     {
       $remote_doc = new ReevooMarkDocument($this-> loadFromRemote($url_path), time());

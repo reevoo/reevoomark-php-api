@@ -9,6 +9,10 @@ class ReevooMarkUtils {
     return empty($var) ? $default : $var;
   }
 
+  static function presenceKey($arr, $key, $default = null) {
+    return (is_array($arr) && array_key_exists($key, $arr)) ? $arr[$key] : $default;
+  }
+
   function getVariant($options = array()) {
     return $options['variant'] ? ' '.$options['variant'].'_variant' : '';
   }
@@ -18,7 +22,7 @@ class ReevooMarkUtils {
   }
 
   function getPaginationParams($options = array()) {
-    $page = self::presence($_GET['reevoo_page'], 1);
+    $page = self::presenceKey($_GET, 'reevoo_page', 1);
     $paginated = $options['paginated'];
     if ($paginated) {
       $numberOfReviews = self::presence($options['numberOfReviews'], "default");
@@ -32,7 +36,7 @@ class ReevooMarkUtils {
   }
 
   function getLocaleParam($options = array()) {
-    if (isset($options['locale'])) {
+    if (self::presenceKey($options, 'locale')) {
       return "&locale={$options['locale']}";
     } else {
       return "";
@@ -40,7 +44,7 @@ class ReevooMarkUtils {
   }
 
   function getSortByParam($options = array()) {
-    if (isset($_GET['reevoo_sort_by'])) {
+    if (self::presenceKey($_GET, 'reevoo_sort_by')) {
       return "&sort_by={$_GET['reevoo_sort_by']}";
     } else {
       return "";
@@ -48,7 +52,7 @@ class ReevooMarkUtils {
   }
 
   function getFilterParam($options = array()) {
-    if (isset($_GET['reevoo_filter'])) {
+    if (self::presenceKey($_GET, 'reevoo_filter')) {
       return "&filter={$_GET['reevoo_filter']}";
     } else {
       return "";
@@ -56,7 +60,7 @@ class ReevooMarkUtils {
   }
 
   function getClientUrlParam($options = array()) {
-    if (isset($options['paginated'])) {
+    if (self::presenceKey($options, 'paginated')) {
       $current_url = urlencode($this->getCurrentURL());
       return "&client_url={$current_url}";
     } else {
@@ -82,16 +86,16 @@ class ReevooMarkUtils {
 
   function getCurrentURL() {
     $protocol = "http";
-    if(self::presence($_SERVER["SERVER_PORT"]) == 443 || (!empty(self::presence($_SERVER["HTTPS"])) && self::presence($_SERVER["HTTPS"]) == "on")) {
+    if(self::presenceKey($_SERVER, "SERVER_PORT") == 443 || (!empty(self::presenceKey($_SERVER, "HTTPS")) && self::presenceKey($_SERVER, "HTTPS") == "on")) {
       $protocol .= "s";
-      $protocol_port = self::presence($_SERVER["SERVER_PORT"]);
+      $protocol_port = self::presenceKey($_SERVER, "SERVER_PORT");
     } else {
       $protocol_port = 80;
     }
-    $host = self::presence($_SERVER["HTTP_HOST"]);
-    $port = self::presence($_SERVER["SERVER_PORT"]);
-    $request_path = self::presence($_SERVER["PHP_SELF"]);
-    $querystr = self::presence($_SERVER["QUERY_STRING"]);
+    $host = self::presenceKey($_SERVER, "HTTP_HOST");
+    $port = self::presenceKey($_SERVER, "SERVER_PORT");
+    $request_path = self::presenceKey($_SERVER, "PHP_SELF");
+    $querystr = self::presenceKey($_SERVER, "QUERY_STRING");
     $url = $protocol."://".$host.(($port!=$protocol_port && strpos($host,":")==-1)?":".$port:"").$request_path.(empty($querystr)?"":"?".$querystr);
     return $url;
   }

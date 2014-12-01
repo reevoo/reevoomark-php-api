@@ -1,11 +1,11 @@
 <?php
 
 require_once('simpletest/autorun.php');
-require_once(dirname(__FILE__).'/../lib/reevoo_mark.php');
+require_once(dirname(__FILE__).'/../lib/reevoo_mark_document.php');
 
 class ReevooMarkDocumentTest extends UnitTestCase {
   function document(){
-    return new ReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"), 0);
+    return new ReevooMarkDocument(file_get_contents(dirname(__FILE__)."/expired_document.cache"), 0);
   }
 
   function test_should_be_a_valid_document(){
@@ -21,16 +21,9 @@ class ReevooMarkDocumentTest extends UnitTestCase {
   }
 }
 
-class CurrentReevooMarkDocument extends ReevooMarkDocument {
-  function date(){
-    $age_of_example_document = 148;
-    return time() - $this->maxAge() + $age_of_example_document;
-  }
-}
-
 class NoneExpiredReevooMarkDocumentTest extends UnitTestCase {
   function document(){
-    return new CurrentReevooMarkDocument(file_get_contents(dirname(__FILE__)."/example_document.cache"), time());
+    return new ReevooMarkDocument(file_get_contents(dirname(__FILE__)."/not_expired_document.cache"), time());
   }
 
   function test_should_be_a_valid_document(){

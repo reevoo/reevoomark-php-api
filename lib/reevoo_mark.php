@@ -1,184 +1,191 @@
 <?php
-  class ReevooMarkDocument {
-    public $data;
-    protected $head, $body, $headers;
+require_once("reevoo_mark_utils.php");
+require_once("reevoo_mark_http_client.php");
 
-    function __construct($data, $mtime){
-      if($this->data = $data)
-        list($this->head, $this->body) = explode("\n\n", $this->data, 2);
-      else
-        $this->head = $this->body = null;
-      $this->mtime = $mtime;
+class ReevooMark {
+
+  function ReevooMark($trkrefs, $cache_path, $base_url = 'http://mark.reevoo.com'){
+    $this->trkrefs = $trkrefs;
+    $this->base_url = $base_url;
+    $this->http_client = new ReevooMarkHttpClient($base_url, $cache_path);
+    $this->utils = new ReevooMarkUtils($trkrefs);
+  }
+
+  function cssAssets() {
+    echo '<link rel="stylesheet" href="//mark.reevoo.com/stylesheets/reevoomark/embedded_reviews.css" type="text/css" />';
+  }
+
+  function productBadge($options = array()) {
+    if (!$options['sku']) {
+      error_log('Compulsory parameter sku has not been provided to ReevooMark#productBadge');
+      return;
     }
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoomark{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$options['sku']}\"></a>";
+  }
 
-    function body(){
-      if($this->isValidResponse())
-        return $this->body;
-      else
-        return "";
+  function conversationsBadge($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#conversationBadge');
+      return;
     }
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoomark reevoo-conversations{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$options['sku']}\"></a>";
+  }
 
-    function statusCode(){
-      $headers = explode("\n", $this->head, 2);
-      $status_line = $headers[0];
-      if(preg_match("/^HTTP\/[^ ]* ([0-9]{3})/", $status_line, $matches))
-        return $matches[1];
-      else
-        return 500;
+  function productSeriesBadge($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#productSeriesBadge');
+      return;
     }
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoomark{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/series:{$options['sku']}\"></a>";
+  }
 
-    function header($name){
-      $headers = $this->headers();
-      $name = strtolower($name);
-      if(array_key_exists($name, $headers))
-        return $headers[$name];
-      else
-        return null;
+  function conversationSeriesBadge($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#conversationSeriesBadge');
+      return;
     }
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoomark reevoo-conversations{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/series:{$options['sku']}\"></a>";
+  }
 
-    function headers(){
-      if($this->headers)
-        return $this->headers;
-      else
-      {
-        $headers = explode("\n", $this->head);
-        array_shift($headers); // Status line is no use here
-        $parsed_headers = Array();
-        foreach($headers as $header){
-          list($key, $value) = explode(":", $header, 2);
-          $parsed_headers[strtolower($key)] = trim($value);
-        }
-        $this->headers = $parsed_headers;
-        return $this->headers;
-      }
+  function overallServiceRatingBadge($options = array()) {
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoo_reputation{$variant}\" href=\"{$this->base_url}/retailer/{$trkref}\"></a>";
+  }
+
+  function customerServiceRatingBadge($options = array()) {
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoo_reputation customer_service{$variant}\" href=\"{$this->base_url}/retailer/{$trkref}\"></a>";
+  }
+
+  function deliveryRatingBadge($options = array()) {
+    $variant = $this->utils->getVariant($options);
+    $trkref = $this->utils->getTrkref($options);
+    echo "<a class=\"reevoo_reputation delivery{$variant}\" href=\"{$this->base_url}/retailer/{$trkref}\"></a>";
+  }
+
+  function productReviews($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#productReviews');
+      return;
     }
+    $trkref = $this->utils->getTrkref($options);
+    $pagination_params = $this->utils->getPaginationParams($options);
+    $locale_param = $this->utils->getLocaleParam($options);
+    $sort_by_param = $this->utils->getSortByParam($options);
+    $filter_param = $this->utils->getFilterParam($options);
+    $client_url_param = $this->utils->getClientUrlParam($options);
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
+    return $notEmpty;
+  }
 
-    function isValidResponse(){
-      if(!$this->data)
-        return false;
-      return 200 == $this->statusCode();
+  function customerExperienceReviews($options = array()) {
+    $trkref = $this->utils->getTrkref($options);
+    $pagination_params = $this->utils->getPaginationParams($options);
+    $locale_param = $this->utils->getLocaleParam($options);
+    $sort_by_param = $this->utils->getSortByParam($options);
+    $filter_param = $this->utils->getFilterParam($options);
+    $client_url_param = $this->utils->getClientUrlParam($options);
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_customer_experience_reviews?trkref={$trkref}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
+    return $notEmpty;
+  }
+
+  function conversations($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#productReviews');
+      return;
     }
+    $trkref = $this->utils->getTrkref($options);
+    $locale_param = $this->utils->getLocaleParam($options);
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_conversations?trkref={$trkref}&sku={$options['sku']}{$locale_param}", "X-Reevoo-ConversationCount", $options);
+    return $notEmpty;
+  }
 
-    function isCachableResponse(){
-      return $this->statusCode() < 500;
+  function purchaseTrackingEvent($options = array()) {
+    $trkref = $this->utils->getTrkref($options);
+    if (!$options['skus']) {
+      error_log('Need to provide the list of skus purchased for ReevooMark#purchaseTrackingEvent');
+      return;
     }
+    $skus = $options['skus'];
+    $value = $options['value'];
+    $this->echo_tracking_script($trkref, "retailer.track_purchase(\"{$skus}\".split(/[ ,]+/), \"{$value}\");");
+  }
 
-    function hasExpired(){
-      if(!$this->data)
-        return true;
-      return $this->maxAge() < $this->currentAge();
+  function propensityToBuyTrackingEvent($options = array()) {
+    $trkref = $this->utils->getTrkref($options);
+    $action = $options['action'];
+    $sku = $options['sku'];
+    if (!$sku) {
+      $sku = "Global CTA";
     }
+    $this->echo_tracking_script($trkref, "retailer.Tracking.ga_track_event(\"Propensity to buy\", \"{$action}\", \"{$sku}\");retailer.track_exit();");
+  }
 
-    function maxAge(){
-      if(preg_match("/max-age=([0-9]+)/", $this->header("Cache-Control"), $matches))
-        return $matches[1];
+  function javascriptAssets() {
+    echo <<<EOT
+<script id="reevoomark-loader" type="text/javascript" charset="utf-8">
+(function () {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = '//cdn.mark.reevoo.com/assets/reevoo_mark.js';
+    var s = document.getElementById('reevoomark-loader');
+    s.parentNode.insertBefore(script, s);
+ })();
+ if (typeof afterReevooMarkLoaded === 'undefined') {
+    var afterReevooMarkLoaded = [];
+ }
+ afterReevooMarkLoaded.push(
+   function () {
+     ReevooApi.each('{$this->trkrefs}'.split(/[ ,]+/), function (retailer) {
+     retailer.init_badges();
+     retailer.init_reevoo_reputation_badges();
+   });
+ }
+);
+</script>
+EOT;
+  }
+
+
+  private function get_embedded_data($embedded_data_url, $count_header, $options) {
+    $showEmptyMessage = array_key_exists('showEmptyMessage', $options) ? $options['showEmptyMessage'] : true;
+    $data = $this->http_client->getData($embedded_data_url);
+    $notEmpty = !!($data->header($count_header));
+    if ($notEmpty || $showEmptyMessage) {
+      echo $data->body();
     }
-
-    function currentAge(){
-      return time() - $this->mtime + $this->header("Age");
-    }
-  };
+    return $notEmpty;
+  }
 
 
-  class ReevooMark {
-    protected $cache_path, $trkref, $sku, $data, $remote_url;
+  private function echo_tracking_script($trkref, $tracking_call) {
+    echo <<<EOT
+<script type="text/javascript" charset="utf-8">
+if (typeof afterReevooMarkLoaded === 'undefined') {
+  var afterReevooMarkLoaded = [];
+}
+afterReevooMarkLoaded.push(
+  function(){
+    ReevooApi.load('{$trkref}', function(retailer){
+      {$tracking_call}
+    });
+  }
+);
+</script>
+EOT;
+  }
 
-    function ReevooMark($cache_path, $mark_url, $trkref, $sku){
-      $this->cache_path = $cache_path;
-      $this->trkref = $trkref;
-      $this->sku = $sku;
-      $sep = preg_match("/\?/",$mark_url) ? "&" : "?";
-      $this->remote_url = "{$mark_url}{$sep}sku=$this->sku&trkref=$this->trkref";
-      $this->data = $this->getData();
-    }
+}
 
-    function reviewCount(){
-      return $this->data->header("X-Reevoo-ReviewCount");
-    }
 
-    function offerCount(){
-      return $this->data->header("X-Reevoo-OfferCount");
-    }
 
-    function conversationCount(){
-      return $this->data->header("X-Reevoo-ConversationCount");
-    }
-
-    function bestPrice(){
-      return $this->data->header("X-Reevoo-BestPrice");
-    }
-
-    function render(){
-      echo $this->body();
-    }
-
-    function body(){
-      return $this->data->body();
-    }
-
-    protected function saveToCache($data){
-      if($this->cache_path){
-        if(!file_exists($this->cache_path))
-          mkdir($this->cache_path);
-        file_put_contents($this->cachePath(), $data);
-      }
-    }
-
-    protected function loadFromCache(){
-      if($this->cache_path){
-        if(file_exists($this->cachePath())){
-          return file_get_contents($this->cachePath());
-        }
-      }
-    }
-
-    protected function cacheMTime(){
-      if($this->cache_path){
-        if(file_exists($this->cachePath())){
-          return filemtime($this->cachePath());
-        }
-      }
-    }
-
-    protected function newDocumentFromCache(){
-      return new ReevooMarkDocument($this->loadFromCache(), $this->cacheMTime());
-    }
-
-    protected function loadFromRemote(){
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $this->remote_url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-      curl_setopt($ch, CURLOPT_TIMEOUT_MS, 2000);
-      curl_setopt($ch, CURLOPT_USERAGENT, "ReevooMark PHP Widget/8");
-      curl_setopt($ch, CURLOPT_REFERER, "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
-      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
-      curl_setopt($ch, CURLOPT_HEADER, 1);
-
-      if($result = curl_exec($ch))
-        return str_replace("\r", "", $result);
-      else
-        return false;
-    }
-
-    protected function cachePath(){
-      $digest = md5($this->remote_url);
-      return  "$this->cache_path/$digest.cache";
-    }
-
-    protected function getData(){
-      $doc = $this->newDocumentFromCache();
-      if($doc->hasExpired())
-      {
-        $remote_doc = new ReevooMarkDocument($this->loadFromRemote(), time());
-        if(!$doc->isCachableResponse() || $remote_doc->isCachableResponse())
-        {
-          $this->saveToCache($remote_doc->data);
-          $doc = $remote_doc;
-        }
-      }
-      return $doc;
-    }
-  };
-
-?>

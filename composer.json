@@ -10,7 +10,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-
+        "reevoo/reevoomark-php-api": "2.*"
     },
     "version" : "2.0.0"
 }

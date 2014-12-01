@@ -84,13 +84,7 @@ class ReevooMark {
     $sort_by_param = $this->utils->getSortByParam($options);
     $filter_param = $this->utils->getFilterParam($options);
     $client_url_param = $this->utils->getClientUrlParam($options);
-    $showEmptyMessage = array_key_exists('showEmptyMessage', $options) ? $options['showEmptyMessage'] : true;
-
-    $data = $this->http_client->getData("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}");
-    $notEmpty = !!$data->header("X-Reevoo-ReviewCount");
-    if ($notEmpty || $showEmptyMessage) {
-      echo $data->body();
-    }
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
     return $notEmpty;
   }
 
@@ -101,13 +95,7 @@ class ReevooMark {
     $sort_by_param = $this->utils->getSortByParam($options);
     $filter_param = $this->utils->getFilterParam($options);
     $client_url_param = $this->utils->getClientUrlParam($options);
-    $showEmptyMessage = array_key_exists('showEmptyMessage', $options) ? $options['showEmptyMessage'] : true;
-
-    $data = $this->http_client->getData("/reevoomark/embeddable_customer_experience_reviews?trkref={$trkref}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}");
-    $notEmpty = !!$data->header("X-Reevoo-ReviewCount");
-    if ($notEmpty || $showEmptyMessage) {
-      echo $data->body();
-    }
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_customer_experience_reviews?trkref={$trkref}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
     return $notEmpty;
   }
 
@@ -118,13 +106,7 @@ class ReevooMark {
     }
     $trkref = $this->utils->getTrkref($options);
     $locale_param = $this->utils->getLocaleParam($options);
-    $showEmptyMessage = array_key_exists('showEmptyMessage', $options) ? $options['showEmptyMessage'] : true;
-
-    $data = $this->http_client->getData("/reevoomark/embeddable_conversations?trkref={$trkref}&sku={$options['sku']}{$locale_param}");
-    $notEmpty = !!$data->header("X-Reevoo-ConversationCount");
-    if ($notEmpty || $showEmptyMessage) {
-      echo $data->body();
-    }
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_conversations?trkref={$trkref}&sku={$options['sku']}{$locale_param}", "X-Reevoo-ConversationCount", $options);
     return $notEmpty;
   }
 
@@ -136,20 +118,7 @@ class ReevooMark {
     }
     $skus = $options['skus'];
     $value = $options['value'];
-    echo <<<EOT
-<script type="text/javascript" charset="utf-8">
-if (typeof afterReevooMarkLoaded === 'undefined') {
-  var afterReevooMarkLoaded = [];
-}
-afterReevooMarkLoaded.push(
-  function(){
-    ReevooApi.load('{$trkref}', function(retailer){
-      retailer.track_purchase("{$skus}".split(/[ ,]+/), "{$value}");
-    });
-  }
-);
-</script>
-EOT;
+    $this->echo_tracking_script($trkref, "retailer.track_purchase(\"{$skus}\".split(/[ ,]+/), \"{$value}\");");
   }
 
   function propensityToBuyTrackingEvent($options = array()) {
@@ -159,21 +128,7 @@ EOT;
     if (!$sku) {
       $sku = "Global CTA";
     }
-    echo <<<EOT
-<script type="text/javascript" charset="utf-8">
-if (typeof afterReevooMarkLoaded === 'undefined') {
-  var afterReevooMarkLoaded = [];
-}
-afterReevooMarkLoaded.push(
-  function(){
-    ReevooApi.load('{$trkref}', function(retailer){
-      retailer.Tracking.ga_track_event("Propensity to buy", "{$action}", "{$sku}");
-      retailer.track_exit();
-    });
-  }
-);
-</script>
-EOT;
+    $this->echo_tracking_script($trkref, "retailer.Tracking.ga_track_event(\"Propensity to buy\", \"{$action}\", \"{$sku}\");retailer.track_exit();");
   }
 
   function javascriptAssets() {
@@ -196,6 +151,35 @@ EOT;
      retailer.init_reevoo_reputation_badges();
    });
  }
+);
+</script>
+EOT;
+  }
+
+
+  private function get_embedded_data($embedded_data_url, $count_header, $options) {
+    $showEmptyMessage = array_key_exists('showEmptyMessage', $options) ? $options['showEmptyMessage'] : true;
+    $data = $this->http_client->getData($embedded_data_url);
+    $notEmpty = !!($data->header($count_header));
+    if ($notEmpty || $showEmptyMessage) {
+      echo $data->body();
+    }
+    return $notEmpty;
+  }
+
+
+  private function echo_tracking_script($trkref, $tracking_call) {
+    echo <<<EOT
+<script type="text/javascript" charset="utf-8">
+if (typeof afterReevooMarkLoaded === 'undefined') {
+  var afterReevooMarkLoaded = [];
+}
+afterReevooMarkLoaded.push(
+  function(){
+    ReevooApi.load('{$trkref}', function(retailer){
+      {$tracking_call}
+    });
+  }
 );
 </script>
 EOT;

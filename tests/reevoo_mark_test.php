@@ -201,6 +201,16 @@ class ReevooMarkTest extends UnitTestCase {
     $this->assertEqual($out1,'');
   }
 
+  function test_offers_widget() {
+    ob_start();
+    $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-OfferCount: 3\n\nsome data");
+    $rvm->http_client->expectOnce("getData", array("/widgets/offers?trkref=REV&sku=123"));
+    $this->assertTrue($rvm->offersWidget(array("trkref" => "REV", "sku" => "123")));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'some data');
+  }
+
   function test_purchase_tracking_event() {
     ob_start();
     $rvm = new ReevooMark('REV', false, 'http://my_url');

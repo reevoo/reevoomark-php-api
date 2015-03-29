@@ -198,6 +198,20 @@ and use return value of the ```productReviews()``` method that is false in this 
 <?php endif ?>
 ```
 
+### Price Offers Widget
+
+To render "price offers" you can use the example below.
+Please provide the ```sku``` attribute. The ```trkref``` attribute is only compulsory if you are using multiple TRKREFs in ```ReevooMark``` constructor.
+
+```php
+<?php $reevooMark->offersWidget(array("sku" => "3461209", "trkref" => "PCA")) ?>
+```
+If there are no offers to display you can display your own custom message as in the example below:
+```php
+<?php if (!$reevooMark->offersWidget(array("sku" => "10023AAA", "trkref" => "PCA"))): ?>
+  <h2>Sorry, no price  offers available for this product</h2>
+<?php endif ?>
+```
 ### Embedded Customer Experience Review Content
 
 To render "embedded customer experience review content" you can use any of the examples below.

@@ -88,6 +88,16 @@ class ReevooMark {
     return $notEmpty;
   }
 
+  function offersWidget($options = array()) {
+    if (!$options['sku']) {
+      error_log('Need to provide a SKU for ReevooMark#productReviews');
+      return;
+    }
+    $trkref = $this->utils->getTrkref($options);
+    $notEmpty = $this->get_embedded_data("/widgets/offers?trkref={$trkref}&sku={$options['sku']}", "X-Reevoo-OfferCount", $options);
+    return $notEmpty;
+  }
+
   function customerExperienceReviews($options = array()) {
     $trkref = $this->utils->getTrkref($options);
     $pagination_params = $this->utils->getPaginationParams($options);

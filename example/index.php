@@ -23,7 +23,13 @@
 
 	<?php $reevooMark->deliveryRatingBadge(array("trkref" => "PIU")) ?>
 
-	<?php $reevooMark->productReviews(array("sku" => "100A", "numberOfReviews" => 6, "paginated" => true, "locale" => "en-GB")) ?>
+    <?php $reevooMark->offersWidget(array("sku" => "3461209", "trkref" => "PCA")) ?>
+
+    <?php if (!$reevooMark->offersWidget(array("sku" => "10023AAA"))): ?>
+        <h2>Sorry, no product offers available</h2>
+    <?php endif ?>
+
+    <?php $reevooMark->productReviews(array("sku" => "100A", "numberOfReviews" => 6, "paginated" => true, "locale" => "en-GB")) ?>
 
 	<?php if (!$reevooMark->productReviews(array("sku" => "10023A", "numberOfReviews" => 6, "paginated" => true, "locale" => "en-GB", "showEmptyMessage" => false))): ?>
 		<h2>Sorry, no product reviews here</h2>

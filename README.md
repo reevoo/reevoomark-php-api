@@ -48,7 +48,7 @@ as a contructor attributes:
 
 ``` php
 <?php
-  require("reevoo_mark.php");
+  require("vendor/reevoo/reevoomark-php-api/lib/reevoo_mark.php");
   $reevooMark = new ReevooMark("REV", "/tmp");
 ?>
 ```

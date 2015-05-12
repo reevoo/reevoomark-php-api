@@ -107,15 +107,13 @@ class ReevooMarkTest extends UnitTestCase {
 
   function test_product_reviews_with_pagination() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\n\nsome data");
-    $client_url = encoded_current_url();
-    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1&client_url={$client_url}"));
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1"));
     $this->assertFalse($rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true)));
   }
 
   function test_product_reviews_with_pagination_and_custom_number_of_reviews() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\n\nsome data");
-    $client_url = encoded_current_url();
-    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=6&page=1&client_url={$client_url}"));
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=6&page=1"));
     $this->assertFalse($rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "numberOfReviews" => 6)));
   }
 
@@ -127,8 +125,7 @@ class ReevooMarkTest extends UnitTestCase {
 
   function test_product_reviews_with_locale() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\n\nsome data");
-    $client_url = encoded_current_url();
-    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1&locale=en-GB&client_url={$client_url}"));
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123&per_page=default&page=1&locale=en-GB"));
     $this->assertFalse($rvm->productReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "locale" => "en-GB")));
   }
 
@@ -154,15 +151,13 @@ class ReevooMarkTest extends UnitTestCase {
 
   function test_customer_experience_reviews_with_pagination() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\n\nsome data");
-    $client_url = encoded_current_url();
-    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=default&page=1&client_url={$client_url}"));
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=default&page=1"));
     $this->assertFalse($rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true)));
   }
 
   function test_customer_experience_reviews_with_pagination_and_custom_review_number() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\n\nsome data");
-    $client_url = encoded_current_url();
-    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=6&page=1&client_url={$client_url}"));
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_customer_experience_reviews?trkref=REV&per_page=6&page=1"));
     $this->assertFalse($rvm->customerExperienceReviews(array("trkref" => "REV", "sku" => "123", "paginated" => true, "numberOfReviews" => 6)));
   }
 

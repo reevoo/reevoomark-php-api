@@ -83,8 +83,7 @@ class ReevooMark {
     $locale_param = $this->utils->getLocaleParam($options);
     $sort_by_param = $this->utils->getSortByParam($options);
     $filter_param = $this->utils->getFilterParam($options);
-    $client_url_param = $this->utils->getClientUrlParam($options);
-    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}", "X-Reevoo-ReviewCount", $options);
     return $notEmpty;
   }
 
@@ -104,8 +103,7 @@ class ReevooMark {
     $locale_param = $this->utils->getLocaleParam($options);
     $sort_by_param = $this->utils->getSortByParam($options);
     $filter_param = $this->utils->getFilterParam($options);
-    $client_url_param = $this->utils->getClientUrlParam($options);
-    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_customer_experience_reviews?trkref={$trkref}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}{$client_url_param}", "X-Reevoo-ReviewCount", $options);
+    $notEmpty = $this->get_embedded_data("/reevoomark/embeddable_customer_experience_reviews?trkref={$trkref}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}", "X-Reevoo-ReviewCount", $options);
     return $notEmpty;
   }
 

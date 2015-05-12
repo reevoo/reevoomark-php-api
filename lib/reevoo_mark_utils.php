@@ -64,15 +64,6 @@ class ReevooMarkUtils {
     }
   }
 
-  function getClientUrlParam($options = array()) {
-    if (self::presenceKey($options, 'paginated')) {
-      $current_url = urlencode($this->getCurrentURL());
-      return "&client_url={$current_url}";
-    } else {
-      return "";
-    }
-  }
-
   function reviewCount($data){
     return $data->header("X-Reevoo-ReviewCount");
   }

@@ -16,8 +16,11 @@ class ReevooMarkUtils {
 
   function getVariant($options = array()) {
     $variant = self::presenceKey($options, 'variant', '');
+    if ($variant != 'undecorated') {
+      $variant = $variant . '_variant';
+    }
     if ($variant != '') {
-      $variant = ' ' . $variant .'_variant';
+      $variant = ' ' . $variant;
     }
     return $variant;
   }

@@ -31,6 +31,15 @@ class ReevooMarkTest extends UnitTestCase {
     $this->assertEqual($out1,'<a class="reevoomark stars_variant" href="http://my_url/partner/REV/123"></a>');
   }
 
+  function test_undecorated_product_badge() {
+    ob_start();
+    $rvm = new ReevooMark('REV', false, 'http://my_url');
+    $rvm->productBadge(array("trkref" => "REV", "variant" => "undecorated", "sku" => "123"));
+    $out1 = ob_get_contents();
+    ob_end_clean();
+    $this->assertEqual($out1,'<a class="reevoomark undecorated" href="http://my_url/partner/REV/123"></a>');
+  }
+
   function test_conversations_badge() {
     ob_start();
     $rvm = new ReevooMark('REV', false, 'http://my_url');

@@ -87,26 +87,26 @@ To include the relevant JavaScript call the method ```javascriptAssets()``` befo
 #### Product Badge
 
 To render "product badges" you can use any of the examples below.
-The ```sku``` is compulsory but ```trkref``` and ```variantName``` are optional.
+The ```sku``` is compulsory but ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 
 ```php
 <?php $reevooMark->productBadge(array("sku" => "ABC")) ?>
-<?php $reevooMark->productBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-<?php $reevooMark->productBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->productBadge(array("sku" => "ABC", "variant" => "undecorated")) ?>
+<?php $reevooMark->productBadge(array("sku" => "ABC", "trkref" => "REV", "variant" => "stars_only")) ?>
 ```
 
 #### Conversations Badge
 
 To render "conversations badges" you can use any of the examples below.
-The ```sku``` is compulsory but ```trkref``` and ```variantName``` are optional.
+The ```sku``` is compulsory but ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
 <?php $reevooMark->conversationsBadge(array("sku" => "ABC")) ?>
-<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "variant" => "undecorated")) ?>
+<?php $reevooMark->conversationsBadge(array("sku" => "ABC", "trkref" => "REV", "variant" => "stars_only")) ?>
 ```
 
 ### Series Badges
@@ -114,62 +114,62 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 #### Product Badges
 
 To render "product series badges" you can use any of the examples below.
-The ```sku``` is compulsory and should be set to the series id. The ```trkref``` and ```variantName``` are optional.
+The ```sku``` is compulsory and should be set to the series id. The ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
 <?php $reevooMark->productSeriesBadge(array("sku" => "ABC")) ?>
-<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "variant" => "undecorated")) ?>
+<?php $reevooMark->productSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variant" => "stars_only")) ?>
 ```
 
 #### Conversations Badges
 
 To render "conversation series badges" you can use any of the examples below.
-The ```sku``` is compulsory and should be set to the series id. The ```trkref``` and ```variantName``` are optional.
+The ```sku``` is compulsory and should be set to the series id. The ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
 <?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC")) ?>
-<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "variantName" => "undecorated")) ?>
-<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variantName" => "stars_only")) ?>
+<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "variant" => "undecorated")) ?>
+<?php $reevooMark->conversationSeriesBadge(array("sku" => "ABC", "trkref" => "REV", "variant" => "stars_only")) ?>
 ```
 
 ### Overall Service Rating Badges
 
 To render "Overall Service Rating badges" you can use any of the examples below.
-The ```trkref``` and ```variantName``` are optional.
+The ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 
 ```php
 <?php $reevooMark->overallServiceRatingBadge() ?>
-<?php $reevooMark->overallServiceRatingBadge(array("variantName" => "undecorated")) ?>
-<?php $reevooMark->overallServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->overallServiceRatingBadge(array("variant" => "undecorated")) ?>
+<?php $reevooMark->overallServiceRatingBadge(array("trkref" => "PIU", "variant" => "stars_only")) ?>
 ```
 
 ### Customer Service Rating Badges
 
 To render "Customer Service Rating badges" you can use any of the examples below.
-The ```trkref``` and ```variantName``` are optional.
+The ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
 <?php $reevooMark->customerServiceRatingBadge() ?>
-<?php $reevooMark->customerServiceRatingBadge(array("variantName" => "undecorated")) ?>
-<?php $reevooMark->customerServiceRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->customerServiceRatingBadge(array("variant" => "undecorated")) ?>
+<?php $reevooMark->customerServiceRatingBadge(array("trkref" => "PIU", "variant" => "stars_only")) ?>
 ```
 
 ### Delivery Rating Badges
 
 To render "Delivery Rating badges" you can use any of the examples below.
-The ```trkref``` and ```variantName``` are optional.
+The ```trkref``` and ```variant``` are optional.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
 ```php
 <?php $reevooMark->deliveryRatingBadge() ?>
-<?php $reevooMark->deliveryRatingBadge(array("variantName" => "undecorated")) ?>
-<?php $reevooMark->deliveryRatingBadge(array("trkref" => "PIU", "variantName" => "stars_only")) ?>
+<?php $reevooMark->deliveryRatingBadge(array("variant" => "undecorated")) ?>
+<?php $reevooMark->deliveryRatingBadge(array("trkref" => "PIU", "variant" => "stars_only")) ?>
 ```
 
 ### Embedded Product Review Content

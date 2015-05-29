@@ -29,7 +29,7 @@ Add the reevoo tag lib to your composer.json like so:
 ```
 {
   "require": {
-    "reevoo/reevoomark-php-api": "2.1.1"
+    "reevoo/reevoomark-php-api": "2.1.2"
   }
 }
 ```

@@ -29,7 +29,7 @@ Add the reevoo tag lib to your composer.json like so:
 ```
 {
   "require": {
-    "reevoo/reevoomark-php-api": "2.1.2"
+    "reevoo/reevoomark-php-api": "2.2.1"
   }
 }
 ```
@@ -79,6 +79,22 @@ To include the relevant JavaScript call the method ```javascriptAssets()``` befo
   ...
   <?php $reevooMark->javascriptAssets() ?>
 </body>
+```
+
+
+### Alternate Implementation
+
+The standard implementation calls echo internally so is less flexible if you want to use the data in contexts other than your pages.
+
+Alternatively you may use the `ReevooMarkApi` class that works in a similar way to `ReevooMark` but returns values directly eg:
+
+``` php
+<?php
+  require("reevoo_mark_api.php");
+  $reevooMark = new ReevooMarkApi("REV", "/tmp");
+  $reevooMark->cssAssets();
+  //=> <link rel="stylesheet" href="//mark.reevoo.com/stylesheets/reevoomark/embedded_reviews.css" type="text/css" />
+?>
 ```
 
 

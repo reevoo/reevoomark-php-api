@@ -201,8 +201,8 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 <?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10)) ?>
 <?php $reevooMark->productReviews(array("sku" => "100A", "trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
 <?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10, "page" => 4)) ?>
-<?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10, "filter" => "landlord")) ?>
-<?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10, "sort_by" => "recent")) ?>
+<?php $reevooMark->productReviews(array("paginated" => true, "numberOfReviews" => 10, "filter" => "landlord")) ?>
+<?php $reevooMark->productReviews(array("paginated" => true, "numberOfReviews" => 10, "sort_by" => "recent")) ?>
 ```
 
 If you set the ```paginated``` attribute to true, the embedded reviews will show pagination links.

@@ -191,7 +191,7 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 ### Embedded Product Review Content
 
 To render "embedded review content" you can use any of the examples below.
-The ```sku``` attribute is compulsory but ```trkref```, ```locale```, ```numberOfReviews```  and ```paginated``` are optional.
+The ```sku``` attribute is compulsory but ```trkref```, ```locale```, ```numberOfReviews```, ```page``` and ```paginated``` are optional.
 Any combination of the optional attributes is possible.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
@@ -200,6 +200,7 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 <?php $reevooMark->productReviews(array("sku" => "100A", "locale" => "en-GB", "numberOfReviews" => 5)) ?>
 <?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10)) ?>
 <?php $reevooMark->productReviews(array("sku" => "100A", "trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
+<?php $reevooMark->productReviews(array("sku" => "100A", "paginated" => true, "numberOfReviews" => 10, "page" => 4)) ?>
 ```
 
 If you set the ```paginated``` attribute to true, the embedded reviews will show pagination links.
@@ -231,7 +232,7 @@ If there are no offers to display you can display your own custom message as in 
 ### Embedded Customer Experience Review Content
 
 To render "embedded customer experience review content" you can use any of the examples below.
-The ```trkref```, ```locale```, ```numberOfReviews``` and ```paginated``` a attributes are optional.
+The ```trkref```, ```locale```, ```numberOfReviews```, ```page``` and ```paginated``` a attributes are optional.
 Any combination of the optional attributes is possible.
 Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` constructor.
 
@@ -240,6 +241,7 @@ Specify ```trkref``` only if you are using multiple TRKREFs in ```ReevooMark``` 
 <?php $reevooMark->customerExperienceReviews(array("numberOfReviews" => 5)) ?>
 <?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10)) ?>
 <?php $reevooMark->customerExperienceReviews(array("trkref" => "REV", "paginated" => true, "locale" => "cs-CZ")) ?>
+<?php $reevooMark->customerExperienceReviews(array("paginated" => true, "numberOfReviews" => 10, "page" => 4)) ?>
 ```
 
 If you set the ```paginated``` attribute to true, the embedded reviews will show pagination links.

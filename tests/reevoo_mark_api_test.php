@@ -24,6 +24,14 @@ class ReevooMarkApiTest extends UnitTestCase {
     );
   }
 
+  function test_product_badge_with_registration() {
+    $rvm = new ReevooMarkApi('REV', false, 'http://my_url');
+    $this->assertEqual(
+      $rvm->productBadge(array("trkref" => "REV", "variant" => "stars", "registration" => "AB12CDE")),
+      '<a class="reevoomark stars_variant" href="http://my_url/partner/REV/AB12CDE?identifier=registration"></a>'
+    );
+  }
+
   function test_undecorated_product_badge() {
     $rvm = new ReevooMarkApi('REV', false, 'http://my_url');
     $this->assertEqual(
@@ -37,6 +45,14 @@ class ReevooMarkApiTest extends UnitTestCase {
     $this->assertEqual(
       $rvm->conversationsBadge(array("trkref" => "REV", "variant" => "stars", "sku" => "123")),
       '<a class="reevoomark reevoo-conversations stars_variant" href="http://my_url/partner/REV/123"></a>'
+    );
+  }
+
+  function test_conversations_badge_with_registration() {
+    $rvm = new ReevooMarkApi('REV', false, 'http://my_url');
+    $this->assertEqual(
+      $rvm->conversationsBadge(array("trkref" => "REV", "variant" => "stars", "registration" => "AB12CDE")),
+      '<a class="reevoomark reevoo-conversations stars_variant" href="http://my_url/partner/REV/AB12CDE?identifier=registration"></a>'
     );
   }
 
@@ -84,6 +100,14 @@ class ReevooMarkApiTest extends UnitTestCase {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-ReviewCount: 5\n\nsome data");
     $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&sku=123"));
     $productReviews = $rvm->productReviews(array("trkref" => "REV", "sku" => "123"));
+    $this->assertTrue($productReviews['notEmpty']);
+    $this->assertEqual($productReviews['content'],'some data');
+  }
+
+  function test_product_reviews_with_registation() {
+    $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-ReviewCount: 5\n\nsome data");
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_reviews?trkref=REV&registration=AB12CDE"));
+    $productReviews = $rvm->productReviews(array("trkref" => "REV", "registration" => "AB12CDE"));
     $this->assertTrue($productReviews['notEmpty']);
     $this->assertEqual($productReviews['content'],'some data');
   }
@@ -179,6 +203,14 @@ class ReevooMarkApiTest extends UnitTestCase {
     $this->assertEqual($conversations['content'],'some data');
   }
 
+  function test_conversations_with_registration() {
+    $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-ConversationCount: 5\n\nsome data");
+    $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_conversations?trkref=REV&registration=AB12CDE"));
+    $conversations = $rvm->conversations(array("trkref" => "REV", "registration" => "AB12CDE"));
+    $this->assertTrue($conversations['notEmpty']);
+    $this->assertEqual($conversations['content'],'some data');
+  }
+
   function test_conversations_with_no_empty_message() {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-ConversationCount: 0\n\nsome data");
     $rvm->http_client->expectOnce("getData", array("/reevoomark/embeddable_conversations?trkref=REV&sku=123"));
@@ -191,6 +223,14 @@ class ReevooMarkApiTest extends UnitTestCase {
     $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-OfferCount: 3\n\nsome data");
     $rvm->http_client->expectOnce("getData", array("/widgets/offers?trkref=REV&sku=123"));
     $offersWidget = $rvm->offersWidget(array("trkref" => "REV", "sku" => "123"));
+    $this->assertTrue($offersWidget['notEmpty']);
+    $this->assertEqual($offersWidget['content'],'some data');
+  }
+
+  function test_offers_widget_with_registation() {
+    $rvm = $this->prepare_embedded_content_request("HTTP/1.1 200 OK\nX-Reevoo-OfferCount: 3\n\nsome data");
+    $rvm->http_client->expectOnce("getData", array("/widgets/offers?trkref=REV&registration=AB12CDE"));
+    $offersWidget = $rvm->offersWidget(array("trkref" => "REV", "registration" => "AB12CDE"));
     $this->assertTrue($offersWidget['notEmpty']);
     $this->assertEqual($offersWidget['content'],'some data');
   }

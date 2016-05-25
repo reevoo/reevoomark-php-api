@@ -16,27 +16,29 @@ class ReevooMarkApi {
   }
 
   function productBadge($options = array()) {
-    if (!$options['sku']) {
-      error_log('Compulsory parameter sku has not been provided to ReevooMark#productBadge');
+    if (!isset($options['sku']) && !isset($options['registration'])) {
+      error_log('Compulsory parameter sku or registration number has not been provided to ReevooMark#productBadge');
       return;
     }
+    $product_identifier = isset($options['sku']) ? $options['sku'] : "{$options['registration']}?identifier=registration";
     $variant = $this->utils->getVariant($options);
     $trkref = $this->utils->getTrkref($options);
-    return "<a class=\"reevoomark{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$options['sku']}\"></a>";
+    return "<a class=\"reevoomark{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$product_identifier}\"></a>";
   }
 
   function conversationsBadge($options = array()) {
-    if (!$options['sku']) {
-      error_log('Need to provide a SKU for ReevooMark#conversationBadge');
+    if (!isset($options['sku']) && !isset($options['registration'])) {
+      error_log('Need to provide a SKU or registration number for ReevooMark#conversationBadge');
       return;
     }
+    $product_identifier = isset($options['sku']) ? $options['sku'] : "{$options['registration']}?identifier=registration";
     $variant = $this->utils->getVariant($options);
     $trkref = $this->utils->getTrkref($options);
-    return "<a class=\"reevoomark reevoo-conversations{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$options['sku']}\"></a>";
+    return "<a class=\"reevoomark reevoo-conversations{$variant}\" href=\"{$this->base_url}/partner/{$trkref}/{$product_identifier}\"></a>";
   }
 
   function productSeriesBadge($options = array()) {
-    if (!$options['sku']) {
+    if (!isset($options['sku'])) {
       error_log('Need to provide a SKU for ReevooMark#productSeriesBadge');
       return;
     }
@@ -46,7 +48,7 @@ class ReevooMarkApi {
   }
 
   function conversationSeriesBadge($options = array()) {
-    if (!$options['sku']) {
+    if (!isset($options['sku'])) {
       error_log('Need to provide a SKU for ReevooMark#conversationSeriesBadge');
       return;
     }
@@ -74,25 +76,28 @@ class ReevooMarkApi {
   }
 
   function productReviews($options = array()) {
-    if (!$options['sku']) {
-      error_log('Need to provide a SKU for ReevooMark#productReviews');
+    if (!isset($options['sku']) && !isset($options['registration'])) {
+      error_log('Need to provide a SKU or registartion number for ReevooMark#productReviews');
       return;
     }
+    $product_identifier = isset($options['sku']) ? 'sku' : 'registration';
     $trkref = $this->utils->getTrkref($options);
     $pagination_params = $this->utils->getPaginationParams($options);
     $locale_param = $this->utils->getLocaleParam($options);
     $sort_by_param = $this->utils->getSortByParam($options);
     $filter_param = $this->utils->getFilterParam($options);
-    return $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&sku={$options['sku']}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}", "X-Reevoo-ReviewCount", $options);
+
+    return $this->get_embedded_data("/reevoomark/embeddable_reviews?trkref={$trkref}&{$product_identifier}={$options[$product_identifier]}{$pagination_params}{$locale_param}{$sort_by_param}{$filter_param}", "X-Reevoo-ReviewCount", $options);
   }
 
   function offersWidget($options = array()) {
-    if (!$options['sku']) {
-      error_log('Need to provide a SKU for ReevooMark#productReviews');
+    if (!isset($options['sku']) && !isset($options['registration'])) {
+      error_log('Need to provide a SKU or registration number for ReevooMark#productReviews');
       return;
     }
+    $product_identifier = isset($options['sku']) ? 'sku' : 'registration';
     $trkref = $this->utils->getTrkref($options);
-    return $this->get_embedded_data("/widgets/offers?trkref={$trkref}&sku={$options['sku']}", "X-Reevoo-OfferCount", $options);
+    return $this->get_embedded_data("/widgets/offers?trkref={$trkref}&{$product_identifier}={$options[$product_identifier]}", "X-Reevoo-OfferCount", $options);
   }
 
   function customerExperienceReviews($options = array()) {
@@ -105,13 +110,14 @@ class ReevooMarkApi {
   }
 
   function conversations($options = array()) {
-    if (!$options['sku']) {
+    if (!isset($options['sku']) && !isset($options['registration'])) {
       error_log('Need to provide a SKU for ReevooMark#productReviews');
       return;
     }
+    $product_identifier = isset($options['sku']) ? 'sku' : 'registration';
     $trkref = $this->utils->getTrkref($options);
     $locale_param = $this->utils->getLocaleParam($options);
-    return $this->get_embedded_data("/reevoomark/embeddable_conversations?trkref={$trkref}&sku={$options['sku']}{$locale_param}", "X-Reevoo-ConversationCount", $options);
+    return $this->get_embedded_data("/reevoomark/embeddable_conversations?trkref={$trkref}&{$product_identifier}={$options[$product_identifier]}{$locale_param}", "X-Reevoo-ConversationCount", $options);
   }
 
   function purchaseTrackingEvent($options = array()) {

@@ -30,7 +30,10 @@ class ReevooMarkUtils {
   }
 
   function getPaginationParams($options = array()) {
-    $page = self::presenceKey($_GET, 'reevoo_page', 1);
+    $page = isset($options['page'])
+          ? self::presenceKey($options, 'page')
+          : self::presenceKey($_GET, 'reevoo_page', 1);
+
     $paginated = self::presenceKey($options, 'paginated');
     if ($paginated) {
       $numberOfReviews = self::presenceKey($options, 'numberOfReviews', "default");
@@ -52,16 +55,24 @@ class ReevooMarkUtils {
   }
 
   function getSortByParam($options = array()) {
-    if (self::presenceKey($_GET, 'reevoo_sort_by')) {
-      return "&sort_by={$_GET['reevoo_sort_by']}";
+    $sortBy = isset($options['sort_by'])
+            ? self::presenceKey($options, 'sort_by')
+            : self::presenceKey($_GET, 'reevoo_sort_by');
+
+    if ($sortBy) {
+      return "&sort_by={$sortBy}";
     } else {
       return "";
     }
   }
 
   function getFilterParam($options = array()) {
-    if (self::presenceKey($_GET, 'reevoo_filter')) {
-      return "&filter={$_GET['reevoo_filter']}";
+    $filter = isset($options['filter'])
+            ? self::presenceKey($options, 'filter')
+            : self::presenceKey($_GET, 'reevoo_filter');
+
+    if ($filter) {
+      return "&filter={$filter}";
     } else {
       return "";
     }

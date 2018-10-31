@@ -2,25 +2,25 @@
 
 [![Build Status](https://travis-ci.org/reevoo/reevoomark-php-api.png?branch=master)](https://travis-ci.org/reevoo/reevoomark-php-api)
 
-##Description
+## Description
 
 The reevoomark-php-api is a PHP tag library for Reevoo Ratings & Reviews customers who want to quickly and easily integrate Reevoo content in to their sites server-side.
 
-##Other Languages
+## Other Languages
 Tag libraries are also available for [.NET](https://github.com/reevoo/reevoomark-dotnet-api) and [Java](https://github.com/reevoo/reevoomark-java-api).
 
-##Features
+## Features
 
 * Server-side inclusion of Reevoo content.
 * Included CSS for display of Reevoo content.
 * Server-side caching of content that respects the cache control rules set by Reevoo.
 
-##Support
+## Support
 For Reevoo Ratings & Reviews customers, support can be obtained by emailing <operations@reevoo.com>.
 
 There is also a [bug tracker](https://github.com/reevoo/reevoomark-php-api/issues) available.
 
-##Installation
+## Installation
 
 Get Composer from [here](https://getcomposer.org/download/) and install it.
 
@@ -40,7 +40,7 @@ and then do:
 $ php composer.phar install
 ```
 
-##Implementation
+## Implementation
 
 Require the PHP library (make sure you use the correct path to the reevoo_mark.php file) and create new instance
 of ReevooMark class with your TRKREF and path to your cache directory (or false if you do not want to use cache)

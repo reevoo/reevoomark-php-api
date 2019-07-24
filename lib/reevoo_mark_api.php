@@ -4,7 +4,7 @@ require_once("reevoo_mark_http_client.php");
 
 class ReevooMarkApi {
 
-  function ReevooMarkApi($trkrefs, $cache_path, $base_url = 'http://mark.reevoo.com'){
+  function __construct($trkrefs, $cache_path, $base_url = 'http://mark.reevoo.com'){
     $this->trkrefs = $trkrefs;
     $this->base_url = $base_url;
     $this->http_client = new ReevooMarkHttpClient($base_url, $cache_path);

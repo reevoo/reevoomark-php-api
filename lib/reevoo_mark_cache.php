@@ -5,7 +5,7 @@ require_once("reevoo_mark_utils.php");
 class ReevooMarkCache {
   var $cache_path;
 
-  function ReevooMarkCache($cache_path) {
+  function __construct($cache_path) {
     $this->cache_path = $cache_path;
   }
 
